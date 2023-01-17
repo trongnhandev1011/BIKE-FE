@@ -1,13 +1,23 @@
-import { Menu, Button } from "antd";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { Menu, Button, Layout, theme } from "antd";
 
-function Sidenav({ color }: { color: string }) {
+const { Sider } = Layout;
+
+export default function SideNav({ navElements }: { navElements: any }) {
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+
   return (
     <>
-      <h1>Sidenav</h1>
+      <Sider style={{ background: colorBgContainer }} width={200}>
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          defaultOpenKeys={["sub1"]}
+          style={{ height: "100%" }}
+          items={navElements}
+        />
+      </Sider>
     </>
   );
 }
-
-export default Sidenav;
