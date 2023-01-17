@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.0.0",
+    "@next/bundle-analyzer": "^13.1.2",
     "@reduxjs/toolkit": "^1.9.1",
     "@types/js-cookie": "^3.0.2",
     "antd": "^5.1.5",
@@ -27,6 +29,7 @@
     "@types/react-dom": "18.0.10",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.2",
+    "sass": "^1.57.1",
     "typescript": "4.9.4"
   }
 }

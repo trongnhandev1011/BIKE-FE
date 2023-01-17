@@ -1,23 +1,12 @@
 import { Button } from "antd";
 import React from "react";
 import useAuth from "../hooks/useAuth";
-import { logout } from "../redux/authentication/authentication.action";
-import { useAppDispatch } from "../redux/store";
+import { DashboardLayout } from "../layouts/DashboardLayout";
 
 const Protected: React.FC<{}> = () => {
-  const dispatch = useAppDispatch();
-  const { user, isAuthUser } = useAuth({
-    redirectTo: "/login",
-  });
+  const { logout } = useAuth();
 
-  console.log(isAuthUser);
-
-  return (
-    <div>
-      <h1>Protected</h1>
-      <Button onClick={() => dispatch(logout())}>Logout</Button>
-    </div>
-  );
+  return <DashboardLayout></DashboardLayout>;
 };
 
 export default Protected;

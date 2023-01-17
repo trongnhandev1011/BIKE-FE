@@ -1,12 +1,26 @@
 import { useEffect } from "react";
 import Router from "next/router";
-import { useAppSelector } from "../redux/store";
+import { useAppDispatch, useAppSelector } from "../redux/store";
+import { login, logout } from "../redux/authentication/authentication.action";
 
 export default function useAuth({
   redirectTo = "",
   redirectIfFound = false,
 } = {}) {
+  const dispatch = useAppDispatch();
   const { user, isAuthUser } = useAppSelector((state) => state.authentication);
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
+  const loginHandler = ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => dispatch(login({ username: email, password: password }));
 
   useEffect(() => {
     if (!redirectTo) return;
@@ -19,5 +33,5 @@ export default function useAuth({
     }
   }, [isAuthUser, redirectIfFound, redirectTo, user]);
 
-  return { user, isAuthUser };
+  return { user, isAuthUser, logout: logoutHandler, login: loginHandler };
 }

@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
-import axiosClient, { setAuthToken } from "../services/axiosClient";
-import { AxiosError } from "axios";
 import { useAppDispatch } from "../redux/store";
-import { login } from "../redux/authentication/authentication.action";
 import useAuth from "../hooks/useAuth";
 
 export type Props = {};
@@ -16,24 +13,17 @@ export interface ILoginResponse {
 }
 
 const Login: React.FC<Props> = () => {
-  const dispatch = useAppDispatch();
-  const { user, isAuthUser } = useAuth({
+  const { login } = useAuth({
     redirectTo: "/protected",
     redirectIfFound: true,
   });
-
-  console.log(user);
 
   const onFinish = async (values: {
     username: string;
     password: string;
     remember: boolean;
   }) => {
-    dispatch(login({ username: values.username, password: values.password }));
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    login({ email: values.username, password: values.password });
   };
   return (
     <div>
@@ -43,7 +33,6 @@ const Login: React.FC<Props> = () => {
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Form.Item

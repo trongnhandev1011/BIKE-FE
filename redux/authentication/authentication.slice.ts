@@ -29,6 +29,22 @@ const authenticationSlice = createSlice({
         user: action.payload,
       };
     },
+    initializeAuth: () => {
+      return {
+        isAuthUser: !!localStorage.getItem(
+          process.env.NEXT_PUBLIC_USER_STORAGE as string
+        ),
+        user:
+          JSON.parse(
+            localStorage.getItem(
+              process.env.NEXT_PUBLIC_USER_STORAGE as string
+            ) as string
+          ) || {},
+        dataFetched: false,
+        isFetching: false,
+        error: false,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => ({
@@ -64,6 +80,6 @@ const authenticationSlice = createSlice({
   },
 });
 
-export const { setUser } = authenticationSlice.actions;
+export const { setUser, initializeAuth } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;
