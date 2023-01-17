@@ -11,11 +11,6 @@ import "./DashboardLayout.module.scss";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
-
 const items2: MenuProps["items"] = [
   UserOutlined,
   LaptopOutlined,
@@ -46,26 +41,20 @@ function DashboardLayout({ children }: { children?: any }) {
   const { logout } = useAuth();
 
   return (
-    <Layout>
-      <Header className="header">
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["2"]}
-          items={items1}
-        />
-        <div>
-          <Button onClick={() => logout()}>Logout</Button>
-        </div>
-      </Header>
-      <Content style={{ padding: "0 50px" }}>
+    <Layout style={{ height: "100%" }}>
+      <Content style={{ margin: "0 50px" }}>
         <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>List</Breadcrumb.Item>
           <Breadcrumb.Item>App</Breadcrumb.Item>
         </Breadcrumb>
-        <Layout style={{ padding: "24px 0", background: colorBgContainer }}>
+        <Layout
+          style={{
+            padding: "24px 24px 24px 0",
+            background: colorBgContainer,
+            height: "90%",
+          }}
+        >
           <Sider style={{ background: colorBgContainer }} width={200}>
             <Menu
               mode="inline"
@@ -75,14 +64,9 @@ function DashboardLayout({ children }: { children?: any }) {
               items={items2}
             />
           </Sider>
-          <div className="tw-py-6 tw-h-screen">
-            <Content>Content</Content>
-          </div>
+          <Content>{children}</Content>
         </Layout>
       </Content>
-      <Footer style={{ textAlign: "center" }}>
-        Ant Design ©2023 Created by Ant UED
-      </Footer>
     </Layout>
   );
 }

@@ -6,6 +6,9 @@ import store from "../redux/store";
 import { Provider } from "react-redux";
 import { AuthProvider } from "../containers/AuthProvider";
 import { fetcher } from "../utils/common";
+import { Layout } from "antd";
+import { HeaderContainer } from "../containers/Header";
+import { WrapperLayout } from "../layouts/WrapperLayout";
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -21,7 +24,9 @@ export default function MyApp(props: AppProps) {
             },
           }}
         >
-          <Component {...pageProps} />
+          <WrapperLayout>
+            <Component {...pageProps} />
+          </WrapperLayout>
         </SWRConfig>
       </AuthProvider>
     </Provider>

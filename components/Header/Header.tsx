@@ -1,16 +1,30 @@
+import { Menu, Button, Layout } from "antd";
+import { MouseEventHandler } from "react";
+const { Header: AntdHeader } = Layout;
+
 interface IHeaderProps {
-  placement?: any;
-  name: string;
-  subName: string;
-  onPress: Function;
+  navElements: any;
+  button: JSX.Element;
 }
 
-function Header({ placement, name, subName, onPress }: IHeaderProps) {
+export default function Header({ navElements, button }: IHeaderProps) {
   return (
     <>
-      <h1>Sidenav</h1>
+      <AntdHeader
+        className="header"
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <div style={{ flexGrow: 5 }}>
+          <div className="logo" />
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={["2"]}
+            items={navElements}
+          />
+        </div>
+        <div>{button}</div>
+      </AntdHeader>
     </>
   );
 }
-
-export default Header;

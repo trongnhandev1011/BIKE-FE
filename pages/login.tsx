@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import { useAppDispatch } from "../redux/store";
 import useAuth from "../hooks/useAuth";
+import { ContainerLayout } from "../layouts/ContainerLayout";
 
 export type Props = {};
 
@@ -26,7 +27,7 @@ const Login: React.FC<Props> = () => {
     login({ email: values.username, password: values.password });
   };
   return (
-    <div>
+    <ContainerLayout>
       <Form
         name="basic"
         labelCol={{ span: 8 }}
@@ -60,12 +61,12 @@ const Login: React.FC<Props> = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button className="text-5xl" type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </ContainerLayout>
   );
 };
 
