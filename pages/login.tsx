@@ -15,7 +15,7 @@ export interface ILoginResponse {
 
 const Login: React.FC<Props> = () => {
   const { login } = useAuth({
-    redirectTo: "/protected",
+    redirectTo: "/dashboard",
     redirectIfFound: true,
   });
 
@@ -61,7 +61,7 @@ const Login: React.FC<Props> = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button className="text-5xl" type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>

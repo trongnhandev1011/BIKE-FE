@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { initializeAuth } from "../../redux/authentication/authentication.slice";
 import { useAppDispatch } from "../../redux/store";
 
-const authPage = ["/protected"];
+const authPage = ["/dashboard"];
 
 export default function AuthProvider({ children }: { children: any }) {
   const dispatch = useAppDispatch();

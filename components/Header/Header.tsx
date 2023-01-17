@@ -1,5 +1,4 @@
 import { Menu, Button, Layout } from "antd";
-import { MouseEventHandler } from "react";
 const { Header: AntdHeader } = Layout;
 
 interface IHeaderProps {

@@ -26,9 +26,10 @@ function DashboardLayout({
             padding: "24px",
             background: colorBgContainer,
             height: "95%",
+            borderRadius: "1rem",
           }}
         >
-          <SideNavContainer />
+          <SideNavContainer navElements={navElements} />
           <Content>{children}</Content>
         </Layout>
       </Content>

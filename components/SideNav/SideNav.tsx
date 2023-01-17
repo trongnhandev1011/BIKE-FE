@@ -1,19 +1,25 @@
-import { Menu, Button, Layout, theme } from "antd";
+import { Menu, Button, Layout, theme, MenuProps } from "antd";
 
 const { Sider } = Layout;
 
-export default function SideNav({ navElements }: { navElements: any }) {
+export default function SideNav({
+  navElements,
+  onClick,
+}: {
+  navElements: any;
+  onClick: MenuProps["onClick"];
+}) {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
   return (
     <>
-      <Sider style={{ background: colorBgContainer }} width={200}>
+      <Sider style={{ background: colorBgContainer }} width={230}>
         <Menu
+          onClick={onClick}
           mode="inline"
-          defaultSelectedKeys={["1"]}
-          defaultOpenKeys={["sub1"]}
+          defaultSelectedKeys={navElements[0].key}
           style={{ height: "100%" }}
           items={navElements}
         />
