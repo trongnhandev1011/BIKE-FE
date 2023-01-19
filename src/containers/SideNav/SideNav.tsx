@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { SideNavComponent } from "../../components/SideNav";
-import { SideNavContext } from "../../pages/dashboard";
+import { SideNavComponent } from "@components/SideNav";
+import { SideNavContext } from "@pages/dashboard";
 import { MenuProps } from "antd";
 
 export default function SideNav({ navElements }: { navElements: any }) {

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Router from "next/router";
-import { useAppDispatch, useAppSelector } from "../redux/store";
-import { login, logout } from "../redux/authentication/authentication.action";
+import { useAppDispatch, useAppSelector } from "@redux/store";
+import { login, logout } from "@redux/authentication/authentication.action";
 
 export default function useAuth({
   redirectTo = "",

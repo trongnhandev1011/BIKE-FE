@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
-import { useAppDispatch } from "../redux/store";
-import useAuth from "../hooks/useAuth";
-import { ContainerLayout } from "../layouts/ContainerLayout";
+import { useAppDispatch } from "@redux/store";
+import useAuth from "@hooks/useAuth";
+import { ContainerLayout } from "@layouts/ContainerLayout";
 
 export type Props = {};
 

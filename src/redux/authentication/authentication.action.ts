@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { loginAPI } from "../../services/authController";
-import { setAuthToken } from "../../services/axiosClient";
+import { loginAPI } from "@services/backend/authController";
+import { setAuthToken } from "@services/backend/axiosClient";
 
 export const login = createAsyncThunk<
   { user: object },

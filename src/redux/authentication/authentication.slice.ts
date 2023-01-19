@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../types";
-import { login, logout } from "./authentication.action";
+import { login, logout } from "@redux/authentication/authentication.action";
 
 export type AuthenticationState = {
   isAuthUser: boolean;

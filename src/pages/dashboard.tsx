@@ -4,7 +4,7 @@ import {
   NotificationOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { DashboardLayout } from "../layouts/DashboardLayout";
+import { DashboardLayout } from "@layouts/DashboardLayout";
 
 const navElements = [
   {

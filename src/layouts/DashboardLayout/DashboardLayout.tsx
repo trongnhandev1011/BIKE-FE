@@ -1,8 +1,7 @@
 import React from "react";
-import { Breadcrumb, Layout, Menu, theme, Button } from "antd";
-import useAuth from "../../hooks/useAuth";
-import "./DashboardLayout.module.scss";
-import { SideNavContainer } from "../../containers/SideNav";
+import { Layout, theme } from "antd";
+import styles from "./DashboardLayout.module.scss";
+import { SideNavContainer } from "@containers/SideNav";
 
 const { Header, Content, Footer, Sider } = Layout;
 

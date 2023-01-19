@@ -1,4 +1,4 @@
-import axiosClient from "../services/axiosClient";
+import axiosClient from "@services/backend/axiosClient";
 
 export const isServer = () => typeof window === "undefined";
 

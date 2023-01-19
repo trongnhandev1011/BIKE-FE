@@ -1,4 +1,4 @@
-import axiosClient from "../axiosClient";
+import axiosClient from "@services/backend/axiosClient";
 
 export function loginAPI(props: { email: string; password: string }) {
   const { email, password } = props;

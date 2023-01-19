@@ -1,5 +1,5 @@
-import { HeaderComponent } from "../../components/Header";
-import useAuth from "../../hooks/useAuth";
+import { HeaderComponent } from "@components/Header";
+import useAuth from "@hooks/useAuth";
 import { Button, MenuProps } from "antd";
 import { useRouter } from "next/router";
 
