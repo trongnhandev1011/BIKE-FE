@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../types";
-import { login, logout } from "@redux/authentication/authentication.action";
+import {
+  initializeAuth,
+  login,
+  logout,
+} from "@redux/authentication/authentication.action";
 
 export type AuthenticationState = {
   isAuthUser: boolean;
@@ -29,24 +33,29 @@ const authenticationSlice = createSlice({
         user: action.payload,
       };
     },
-    initializeAuth: () => {
-      return {
-        isAuthUser: !!localStorage.getItem(
-          process.env.NEXT_PUBLIC_USER_STORAGE as string
-        ),
-        user:
-          JSON.parse(
-            localStorage.getItem(
-              process.env.NEXT_PUBLIC_USER_STORAGE as string
-            ) as string
-          ) || {},
-        dataFetched: false,
-        isFetching: false,
-        error: false,
-      };
-    },
   },
   extraReducers: (builder) => {
+    builder.addCase(initializeAuth.pending, (state) => ({
+      ...state,
+      isFetching: true,
+      dataFetched: false,
+      error: false,
+    }));
+    builder.addCase(initializeAuth.fulfilled, (state, action) => ({
+      isAuthUser: true,
+      user: action.payload.user,
+      isFetching: false,
+      dataFetched: true,
+      error: false,
+    }));
+    builder.addCase(initializeAuth.rejected, (state, action) => ({
+      isAuthUser: false,
+      user: {},
+      isFetching: false,
+      dataFetched: true,
+      isError: true,
+      error: !!action.payload,
+    }));
     builder.addCase(login.fulfilled, (state, action) => ({
       isAuthUser: true,
       user: action.payload.user,
@@ -80,6 +89,6 @@ const authenticationSlice = createSlice({
   },
 });
 
-export const { setUser, initializeAuth } = authenticationSlice.actions;
+export const { setUser } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;

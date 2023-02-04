@@ -5,6 +5,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { DashboardLayout } from "@layouts/DashboardLayout";
+import { StationScreen } from "@containers/Screen";
 
 const navElements = [
   {
@@ -15,14 +16,14 @@ const navElements = [
   },
   {
     key: "APP_MANAGEMENT",
-    id: "APP_MANAGEMENT: ",
+    id: "APP_MANAGEMENT",
     icon: React.createElement(NotificationOutlined),
     label: `App management`,
     children: [
       {
-        key: "LOCATION_MANAGEMENT",
-        id: "LOCATION_MANAGEMENT",
-        label: `Location management`,
+        key: "STATION_MANAGEMENT",
+        id: "STATION_MANAGEMENT",
+        label: `Station management`,
       },
     ],
   },
@@ -36,7 +37,7 @@ const navElements = [
 
 const navContents: Record<string, JSX.Element> = {
   HOME: <h1>Home</h1>,
-  LOCATION_MANAGEMENT: <h1>Location management</h1>,
+  STATION_MANAGEMENT: <StationScreen />,
   USER_MANAGEMENT: <h1>User management</h1>,
 };
 

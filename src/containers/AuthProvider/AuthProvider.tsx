@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import useAuth from "@hooks/useAuth";
-import { initializeAuth } from "@redux/authentication/authentication.slice";
 import { useAppDispatch } from "@redux/store";
+import { initializeAuth } from "@redux/authentication/authentication.action";
 
 const authPage = ["/dashboard"];
 
