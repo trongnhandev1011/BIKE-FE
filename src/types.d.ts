@@ -1,7 +1,12 @@
 export type User =
   | {
+      id: string;
       email: string;
       name: string;
-      role: string;
+      phone: string;
+      avatar: string;
+      card: string;
+      averagePoint: number;
+      isUpdated: boolean;
     }
   | {};

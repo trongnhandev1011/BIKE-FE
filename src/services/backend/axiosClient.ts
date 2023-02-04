@@ -6,8 +6,6 @@ const axiosClient = axios.create({
   baseURL: DEFAULT_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    "x-mock-match-request-body": true,
-    "x-mock-match-request-headers": true,
   },
 });
 
