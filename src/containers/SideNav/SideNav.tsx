@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { SideNavComponent } from "@components/SideNav";
 import { SideNavContext } from "@pages/dashboard";
 import { MenuProps } from "antd";
+import useAuth from "@hooks/useAuth";
+import { useRouter } from "next/router";
 
 export default function SideNav({ navElements }: { navElements: any }) {
   const { setCurrentTabId } = useContext(SideNavContext);
@@ -10,5 +12,19 @@ export default function SideNav({ navElements }: { navElements: any }) {
     setCurrentTabId(e.key);
   };
 
-  return <SideNavComponent navElements={navElements} onClick={handleClick} />;
+  const { logout } = useAuth();
+  const router = useRouter();
+
+  const logoutHandler = () => {
+    logout();
+    router.push("/login");
+  };
+
+  return (
+    <SideNavComponent
+      navElements={navElements}
+      onClick={handleClick}
+      logoutHandler={logoutHandler}
+    />
+  );
 }

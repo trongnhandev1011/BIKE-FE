@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useSWR from "swr";
-import { Modal, Input, Typography, Row, Col } from "antd";
+import { Input, Row, Col } from "antd";
 import { PaginationResponse } from "src/types/Response.type";
 import { TableComponent } from "@components/Table";
 import Pagination from "@components/Pagination/Pagination";
@@ -10,14 +10,18 @@ const { Search } = Input;
 
 const TableContainer = ({
   pathName,
-  tableName,
   columns,
   children,
+  pagination,
+  inputSearch,
+  itemNumber,
 }: {
   pathName: string;
-  tableName: string;
   columns: any;
   children?: any;
+  pagination?: boolean;
+  inputSearch?: boolean;
+  itemNumber?: number;
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentId, setCurrentId] = useState<number>(0);
@@ -39,16 +43,19 @@ const TableContainer = ({
 
   return (
     <div className="table-container">
-      <Typography.Title className="ml-5" level={2}>
-        {tableName} Management
-      </Typography.Title>
-      <Row>
-        <Col span={18}></Col>
-        <Col span={6}>
-          <Search placeholder="input search text" enterButton />
-        </Col>
-      </Row>
-      <TableComponent data={response?.data} columns={columns} />
+      {inputSearch ? (
+        <Row>
+          <Col span={18}></Col>
+          <Col span={6}>
+            <Search placeholder="input search text" enterButton />
+          </Col>
+        </Row>
+      ) : null}
+      <TableComponent
+        data={response?.data}
+        columns={columns}
+        itemNumber={itemNumber}
+      />
       <DetailDataModalContainer
         currentId={currentId}
         itemList={itemList}
@@ -56,10 +63,12 @@ const TableContainer = ({
       >
         {children}
       </DetailDataModalContainer>
-      <Pagination
-        total={response?.data?.totalSize}
-        setCurrentPage={setCurrentPage}
-      />
+      {pagination ? (
+        <Pagination
+          total={response?.data?.totalSize}
+          setCurrentPage={setCurrentPage}
+        />
+      ) : null}
     </div>
   );
 };
