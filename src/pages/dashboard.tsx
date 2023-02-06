@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { DashboardLayout } from "@layouts/DashboardLayout";
 import { StationScreen } from "@containers/Screen";
+import { DashboardContainer } from "@containers/Dashboard";
 
 const navElements = [
   {
@@ -36,7 +37,7 @@ const navElements = [
 ];
 
 const navContents: Record<string, JSX.Element> = {
-  HOME: <h1>Home</h1>,
+  HOME: <DashboardContainer />,
   STATION_MANAGEMENT: <StationScreen />,
   USER_MANAGEMENT: <h1>User management</h1>,
 };

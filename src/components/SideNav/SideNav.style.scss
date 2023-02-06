@@ -1,0 +1,20 @@
+.left-side-menu {
+  border-inline-end: none !important;
+  padding: 15px;
+  border-radius: 20px;
+}
+
+.ant-layout-sider-children {
+  height: auto !important;
+}
+
+.content-board {
+  display: none !important;
+}
+
+.rectangle-divider {
+  height: 5px;
+  width: 100px;
+  background-color: black;
+  border-radius: 10px;
+}

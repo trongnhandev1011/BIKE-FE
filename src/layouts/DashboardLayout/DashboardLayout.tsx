@@ -3,7 +3,7 @@ import { Layout, theme } from "antd";
 import styles from "./DashboardLayout.module.scss";
 import { SideNavContainer } from "@containers/SideNav";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content } = Layout;
 
 function DashboardLayout({
   children,
@@ -17,21 +17,34 @@ function DashboardLayout({
   } = theme.useToken();
 
   return (
-    <Layout style={{ height: "100%" }}>
-      <Content style={{ margin: "0 50px", height: "100%" }}>
-        <Layout
+    <Layout style={{ height: "calc(100vw - 64px)" }}>
+      <div className="flex" style={{ height: "100%" }}>
+        <Content
+          className="layout-container"
+          style={{ margin: "0 50px", height: "100%" }}
+        >
+          <Layout
+            style={{
+              marginTop: "24px",
+              background: colorBgContainer,
+              height: "95%",
+              borderRadius: "1rem",
+              width: "fit-content",
+            }}
+          >
+            <SideNavContainer navElements={navElements} />
+          </Layout>
+        </Content>
+        <div
+          className="my-6 mr-10"
           style={{
-            marginTop: "24px",
-            padding: "24px",
-            background: colorBgContainer,
-            height: "95%",
-            borderRadius: "1rem",
+            width: "calc(100vw)",
+            borderRadius: 15,
           }}
         >
-          <SideNavContainer navElements={navElements} />
-          <Content>{children}</Content>
-        </Layout>
-      </Content>
+          {children}
+        </div>
+      </div>
     </Layout>
   );
 }

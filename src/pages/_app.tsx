@@ -1,4 +1,5 @@
 import "@styles/globals.scss";
+import "@components/SideNav/SideNav.style.scss";
 import { SWRConfig } from "swr";
 import type { AppProps } from "next/app";
 import "antd/dist/reset.css";
