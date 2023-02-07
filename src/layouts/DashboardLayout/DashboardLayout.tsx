@@ -1,6 +1,5 @@
 import React from "react";
 import { Layout, theme } from "antd";
-import styles from "./DashboardLayout.module.scss";
 import { SideNavContainer } from "@containers/SideNav";
 
 const { Content } = Layout;
@@ -17,12 +16,9 @@ function DashboardLayout({
   } = theme.useToken();
 
   return (
-    <Layout style={{ height: "calc(100vw - 64px)" }}>
-      <div className="flex" style={{ height: "100%" }}>
-        <Content
-          className="layout-container"
-          style={{ margin: "0 50px", height: "100%" }}
-        >
+    <Layout>
+      <div className="flex">
+        <Content className="layout-container" style={{ margin: "0 50px" }}>
           <Layout
             style={{
               marginTop: "24px",

@@ -16,7 +16,7 @@ const InformationCard = ({ data }: { data: any }) => {
         </div>
       </div>
       <div
-        className="flex items-center px-4"
+        className="items-center hidden px-4"
         style={{ backgroundColor: "#1A90FF", borderRadius: 10 }}
       >
         <CarOutlined
