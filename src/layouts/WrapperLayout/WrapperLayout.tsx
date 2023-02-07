@@ -7,7 +7,7 @@ export default function WrapperLayout({ children }: { children?: any }) {
   const { pathname } = useRouter();
 
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout>
       {pathname !== "/dashboard" ? <HeaderContainer /> : null}
       {children}
     </Layout>

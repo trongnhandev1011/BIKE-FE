@@ -39,7 +39,11 @@ const navElements = [
 const navContents: Record<string, JSX.Element> = {
   HOME: <DashboardContainer />,
   STATION_MANAGEMENT: <StationScreen />,
-  USER_MANAGEMENT: <h1>User management</h1>,
+  USER_MANAGEMENT: (
+    <div style={{ height: "calc(100vh - 64px)" }}>
+      <h1>User management</h1>
+    </div>
+  ),
 };
 
 export const SideNavContext = React.createContext({

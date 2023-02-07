@@ -18,15 +18,15 @@ const data = [
   {
     title: "Ant Design Title 3",
   },
-  {
-    title: "Ant Design Title 4",
-  },
 ];
 
 const Dashboard = () => {
   const { setCurrentTabId } = useContext(SideNavContext);
   return (
-    <div className="dashboard-container">
+    <div
+      className="dashboard-container"
+      style={{ height: "calc(100vh - 64px)", overflowY: "scroll" }}
+    >
       <DashboardInformationCardList data={data} />
       <div
         className="flex justify-between items-end"

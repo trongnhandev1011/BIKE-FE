@@ -6,7 +6,7 @@ import { Typography } from "antd";
 
 const StationScreen = () => {
   return (
-    <div className="station-page">
+    <div className="station-page" style={{ height: "calc(100vh - 64px)" }}>
       <Typography.Title className="ml-5" level={2}>
         Station Management
       </Typography.Title>
