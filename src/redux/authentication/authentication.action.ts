@@ -34,10 +34,10 @@ export const login = createAsyncThunk<
     } = await loginAPI({ email: username, password: password });
     setAuthToken(data.token);
     Cookies.set(process.env.NEXT_PUBLIC_TOKEN_KEY as string, data.token);
-    // Cookies.set(
-    //   process.env.NEXT_PUBLIC_REFRESH_TOKEN_KEY as string,
-    //   data.refreshToken
-    // );
+    Cookies.set(
+      process.env.NEXT_PUBLIC_REFRESH_TOKEN_KEY as string,
+      data.refreshToken
+    );
     const {
       data: { data: userData },
     } = await getAuthenticatedUserAPI();
