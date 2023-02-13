@@ -8,9 +8,27 @@ import { Provider } from "react-redux";
 import { AuthProvider } from "@containers/AuthProvider";
 import { fetcher } from "@utils/common";
 import { WrapperLayout } from "@layouts/WrapperLayout";
+import { useEffect, useState } from "react";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
+  const [lastPong, setLastPong] = useState(null);
+
+  useEffect(() => {
+    const socket = new SockJS("http://52.74.214.224:8080/ws");
+    const stompClient = Stomp.over(socket);
+    stompClient.connect({}, () => {
+      console.log("connected");
+      stompClient.subscribe(
+        "/user/e7f506b0-2147-408c-ba9d-102e7a8f03be/notifications",
+        (mess) => {
+          console.log(mess.body);
+        }
+      );
+    });
+  }, []);
 
   return (
     <Provider store={store}>
@@ -30,4 +48,8 @@ export default function MyApp(props: AppProps) {
       </AuthProvider>
     </Provider>
   );
+}
+
+function NotificationProvider({ children }: { children: any }) {
+  return <>{children()}</>;
 }
