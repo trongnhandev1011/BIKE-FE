@@ -19,8 +19,8 @@ const stationColumns: ColumnsType<StationTableHeaderType> = [
   },
   {
     title: "Address",
-    dataIndex: "address_string",
-    key: "address_string",
+    dataIndex: "address",
+    key: "address",
   },
   {
     title: "Action",

@@ -5,7 +5,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { DashboardLayout } from "@layouts/DashboardLayout";
-import { StationScreen } from "@containers/Screen";
+import { StationScreen, TripScreen } from "@containers/Screen";
 import { DashboardContainer } from "@containers/Dashboard";
 
 const navElements = [
@@ -26,6 +26,11 @@ const navElements = [
         id: "STATION_MANAGEMENT",
         label: `Station management`,
       },
+      {
+        key: "TRIP_MANAGEMENT",
+        id: "TRIP_MANAGEMENT",
+        label: `Trip management`,
+      },
     ],
   },
   {
@@ -39,6 +44,7 @@ const navElements = [
 const navContents: Record<string, JSX.Element> = {
   HOME: <DashboardContainer />,
   STATION_MANAGEMENT: <StationScreen />,
+  TRIP_MANAGEMENT: <TripScreen />,
   USER_MANAGEMENT: (
     <div style={{ height: "calc(100vh - 64px)" }}>
       <h1>User management</h1>

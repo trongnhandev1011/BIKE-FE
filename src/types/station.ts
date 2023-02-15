@@ -2,7 +2,7 @@ export type Station = {
   id: number;
   name: string;
   description: string;
-  address_string: string;
+  address: string;
   longitude: number;
   latitude: number;
   created_time: string;
@@ -13,5 +13,6 @@ export type Station = {
 
 export type StationTableHeaderType = Pick<
   Station,
-  "id" | "name" | "description" | "address_string"
+  "id" | "name" | "description" | "address"
 >;
+

@@ -30,7 +30,7 @@ const StationModal = ({
           <Input defaultValue={currentItem?.description} />
         </Form.Item>
         <Form.Item name="address" label="Address">
-          <Input defaultValue={currentItem?.address_string} />
+          <Input defaultValue={currentItem?.address} />
         </Form.Item>
         <Form.Item name="longitude" label="Longitude">
           <Input defaultValue={currentItem?.longitude} />

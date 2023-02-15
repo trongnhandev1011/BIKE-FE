@@ -15,6 +15,8 @@ const TableContainer = ({
   pagination,
   inputSearch,
   itemNumber,
+  searchParams = {},
+  forceRerender = 0,
 }: {
   pathName: string;
   columns: any;
@@ -22,13 +24,20 @@ const TableContainer = ({
   pagination?: boolean;
   inputSearch?: boolean;
   itemNumber?: number;
+  searchParams?: object;
+  forceRerender?: number;
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentId, setCurrentId] = useState<number>(0);
 
-  const { data: response } = useSWR<PaginationResponse<any>>(
-    `/${pathName}?_page=${currentPage}&_limit=10`
-  );
+  const { data: response } = useSWR<PaginationResponse<any>>({
+    url: `/${pathName}`,
+    args: {
+      pageNumber: currentPage.toString(),
+      pageSize: "10",
+      ...searchParams,
+    },
+  });
 
   const itemList = response?.data.items.map((item: any) => ({
     ...item,
@@ -52,6 +61,7 @@ const TableContainer = ({
         </Row>
       ) : null}
       <TableComponent
+        forceRerender={forceRerender}
         data={response?.data}
         columns={columns}
         itemNumber={itemNumber}
