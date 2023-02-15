@@ -5,10 +5,12 @@ const TableComponent = ({
   data,
   columns,
   itemNumber,
+  forceRerender = 0,
 }: {
   data: any;
   columns: any;
   itemNumber?: number;
+  forceRerender?: number;
 }) => {
   return (
     <div className="station-table">
@@ -17,6 +19,7 @@ const TableComponent = ({
         columns={columns}
         pagination={false}
         dataSource={data?.items.slice(0, itemNumber)}
+        key={forceRerender}
       />
     </div>
   );
