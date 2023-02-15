@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { AuthProvider } from "@containers/AuthProvider";
 import { fetcher } from "@utils/common";
 import { WrapperLayout } from "@layouts/WrapperLayout";
+import { NotificationProvider } from "@containers/NotificationProvider";
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -15,18 +16,20 @@ export default function MyApp(props: AppProps) {
   return (
     <Provider store={store}>
       <AuthProvider>
-        <SWRConfig
-          value={{
-            fetcher: fetcher,
-            onError: (err) => {
-              console.error(err);
-            },
-          }}
-        >
-          <WrapperLayout>
-            <Component {...pageProps} />
-          </WrapperLayout>
-        </SWRConfig>
+        <NotificationProvider>
+          <SWRConfig
+            value={{
+              fetcher: fetcher,
+              onError: (err) => {
+                console.error(err);
+              },
+            }}
+          >
+            <WrapperLayout>
+              <Component {...pageProps} />
+            </WrapperLayout>
+          </SWRConfig>
+        </NotificationProvider>
       </AuthProvider>
     </Provider>
   );

@@ -17,13 +17,13 @@ export function loginAPI(props: { email: string; password: string }) {
 
 export function getAuthenticatedUserAPI() {
   return axiosClient.get<Response<User>>(
-    "http://52.74.214.224:8080/api/v1/users/getInfo"
+    "http://52.74.214.224:8080/api/v1/users/me"
   );
 }
 
 export function refreshTokenAPI(refreshToken: string) {
   return axios.post<Response<IAuth>>(
-    "http://52.74.214.224:8080/api/v1/auth/refreshToken",
+    "http://52.74.214.224:8080/api/v1/auth/refresh",
     {
       refreshToken,
     }
