@@ -9,10 +9,10 @@ export type Station = {
   create_by: string;
   last_modified_time: string;
   last_modified_by: string;
+  nextStations: Station[];
 };
 
 export type StationTableHeaderType = Pick<
   Station,
   "id" | "name" | "description" | "address"
 >;
-
