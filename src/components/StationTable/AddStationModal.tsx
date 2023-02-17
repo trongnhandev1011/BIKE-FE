@@ -3,14 +3,10 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { Station } from "src/types/station";
 import { Transfer } from "antd";
 import type { TransferDirection, TransferListProps } from "antd/es/transfer";
-import { formMapItems } from "./formMapItems";
+import { addStationFormItems } from "./formMapItems";
 import { createStationAPI } from "@services/backend/StationController";
-
-interface RecordType {
-  key: string;
-  title: string;
-  description: string;
-}
+import type { StationFormFields } from "./formMapItems";
+import StationFormValidation from "src/form/validation/stationFormValidation";
 
 const onFinish = async (values: any) => {
   try {
@@ -60,20 +56,12 @@ const AddStationModal = ({
           onFinish({ ...values, nextStationsIds: targetKeys })
         }
       >
-        {formMapItems.map((formItem) => (
+        {addStationFormItems.map((formItem) => (
           <Form.Item
             name={formItem.name}
             label={formItem.label}
             key={formItem.name}
-            rules={[
-              {
-                required: formItem.isRequired,
-                message: `Please enter ${formItem.name} !`,
-              },
-              {
-                validator: formItem?.validation,
-              },
-            ]}
+            rules={StationFormValidation[formItem.name as StationFormFields]}
           >
             <Input />
           </Form.Item>

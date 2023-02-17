@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { StationTableColumn } from "@containers/TableColumn";
 import { TableContainer } from "@containers/Table";
-import StationModal from "@components/StationTable/StationModal";
 import { Typography, Button } from "antd";
 import { AddStationModalContainer } from "@containers/AddDataModal";
+import DetailStationModalContainer from "@containers/DetailStationModal/DetailStationModal";
 
 const StationScreen = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -23,7 +23,7 @@ const StationScreen = () => {
         pagination
         itemNumber={10}
       >
-        <StationModal />
+        <DetailStationModalContainer />
       </TableContainer>
       <AddStationModalContainer
         isOpen={isAddModalOpen}
