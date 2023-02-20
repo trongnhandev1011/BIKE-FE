@@ -39,6 +39,7 @@ const DetailDataModal = ({
           currentItem: currentItem,
           isEdit: isEdit,
           setIsEdit: setIsEdit,
+          closeModalHandle: closeModalHandle,
         })}
       </Modal>
     </div>
