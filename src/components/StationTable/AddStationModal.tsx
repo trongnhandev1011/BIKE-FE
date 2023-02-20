@@ -14,7 +14,7 @@ const onFinish = async (values: any) => {
       ...values,
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 

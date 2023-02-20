@@ -38,11 +38,13 @@ const AddStationModalContainer = ({
       >
         <AddStationModal
           stations={
-            response?.reduce(
-              (currentValue, { data: { items } }) =>
-                [...currentValue, ...items] as any,
-              []
-            ) || []
+            response
+              ? response?.reduce(
+                  (currentValue, { data: { items } }) =>
+                    [...currentValue, ...items] as any,
+                  []
+                )
+              : []
           }
           setPageNumber={setSize}
         />

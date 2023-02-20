@@ -36,10 +36,15 @@ export const addStationFormItems: IStationModalFormItems[] = [
 ];
 
 export const stationModalFormItems: IStationModalFormItems[] = [
-  ...addStationFormItems,
   {
     name: "id",
     label: "ID",
+    disabled: true,
+  },
+  ...addStationFormItems,
+  {
+    name: "status",
+    label: "Status",
     disabled: true,
   },
 ];

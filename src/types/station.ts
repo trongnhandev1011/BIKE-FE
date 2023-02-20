@@ -9,6 +9,7 @@ export type Station = {
   create_by: string;
   last_modified_time: string;
   last_modified_by: string;
+  status: "ACTIVE" | "INACTIVE";
   nextStations: Station[];
 };
 
