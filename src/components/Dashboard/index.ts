@@ -1,1 +1,1 @@
-export { default as DashboardTableComponent } from "./DashboardTable";
+export { default as DashboardTableComponent } from "./DashboardInformationCardList";

@@ -7,7 +7,9 @@ const InformationCard = ({ data }: { data: any }) => {
       style={{ backgroundColor: "white", padding: 20, borderRadius: 15 }}
     >
       <div>
-        <div style={{ color: "#8C8C8C", fontWeight: "bold" }}>Today's trip</div>
+        <div style={{ color: "#8C8C8C", fontWeight: "bold" }}>
+          {"Today's trip"}
+        </div>
         <div className="flex">
           <div style={{ fontWeight: "bold", fontSize: 28 }}>10000 trip</div>
           <div className="ml-2" style={{ color: "green" }}>

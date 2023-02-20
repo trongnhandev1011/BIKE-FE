@@ -30,7 +30,7 @@ const TableContainer = ({
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentId, setCurrentId] = useState<number>(0);
 
-  const { data: response } = useSWR<PaginationResponse<any>>({
+  const { data: response, mutate } = useSWR<PaginationResponse<any>>({
     url: `/${pathName}`,
     args: {
       pageNumber: currentPage.toString(),
@@ -70,6 +70,7 @@ const TableContainer = ({
         currentId={currentId}
         itemList={itemList}
         setCurrentId={setCurrentId}
+        refreshTable={mutate}
       >
         {children}
       </DetailDataModalContainer>

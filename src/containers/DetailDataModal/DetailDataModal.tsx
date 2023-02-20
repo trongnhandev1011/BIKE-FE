@@ -7,11 +7,13 @@ const DetailDataModal = ({
   itemList,
   setCurrentId,
   children,
+  refreshTable,
 }: {
   currentId: number;
   itemList: any;
   setCurrentId: Dispatch<SetStateAction<number>>;
   children?: any;
+  refreshTable?: any;
 }) => {
   const [currentItem, setCurrentItem] = useState<any | null>(null);
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -40,6 +42,7 @@ const DetailDataModal = ({
           isEdit: isEdit,
           setIsEdit: setIsEdit,
           closeModalHandle: closeModalHandle,
+          refreshTable: refreshTable,
         })}
       </Modal>
     </div>

@@ -24,3 +24,12 @@ export function editStationAPI(
     }
   );
 }
+
+export function setStationStatusAPI(
+  stationId: number,
+  status: "ACTIVE" | "INACTIVE"
+) {
+  return axiosClient.put<Response<{ success: boolean }>>(
+    `/stations/${stationId}/status?status=${status}`
+  );
+}
