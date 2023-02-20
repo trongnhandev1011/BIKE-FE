@@ -3,9 +3,10 @@ import {
   LaptopOutlined,
   NotificationOutlined,
   UserOutlined,
+  CarOutlined,
 } from "@ant-design/icons";
 import { DashboardLayout } from "@layouts/DashboardLayout";
-import { StationScreen, TripScreen } from "@containers/Screen";
+import { StationScreen, TripScreen, UserScreen, VehicleRequestScreen } from "@containers/Screen";
 import { DashboardContainer } from "@containers/Dashboard";
 
 const navElements = [
@@ -39,17 +40,20 @@ const navElements = [
     icon: React.createElement(UserOutlined),
     label: `User management`,
   },
+  {
+    key: "VEHICLE_REQUEST_MANAGEMENT",
+    id: "VEHICLE_REQUEST_MANAGEMENT",
+    icon: React.createElement(CarOutlined),
+    label: `Vehicle request management`,
+  },
 ];
 
 const navContents: Record<string, JSX.Element> = {
   HOME: <DashboardContainer />,
   STATION_MANAGEMENT: <StationScreen />,
   TRIP_MANAGEMENT: <TripScreen />,
-  USER_MANAGEMENT: (
-    <div style={{ height: "calc(100vh - 64px)" }}>
-      <h1>User management</h1>
-    </div>
-  ),
+  USER_MANAGEMENT: <UserScreen />,
+  VEHICLE_REQUEST_MANAGEMENT: <VehicleRequestScreen /> , 
 };
 
 export const SideNavContext = React.createContext({
