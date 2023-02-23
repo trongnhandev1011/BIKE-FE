@@ -3,10 +3,11 @@ import { StationTableColumn } from "@containers/TableColumn";
 import { TableContainer } from "@containers/Table";
 import { Typography, Button } from "antd";
 import { AddStationModalContainer } from "@containers/AddDataModal";
-import DetailStationModalContainer from "@containers/DetailStationModal/DetailStationModal";
+import { DetailStationModalContainer } from "@containers/DetailDataModal";
 
 const StationScreen = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [searchParams, setSearchParams] = useState<object>({});
 
   return (
     <div className="station-page" style={{ height: "calc(100vh - 64px)" }}>
@@ -22,6 +23,8 @@ const StationScreen = () => {
         inputSearch
         pagination
         itemNumber={10}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
       >
         <DetailStationModalContainer />
       </TableContainer>

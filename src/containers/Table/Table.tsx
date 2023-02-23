@@ -1,5 +1,5 @@
-import { useState } from "react";
-import useSWR from "swr";
+import { useState, MutableRefObject, Dispatch, SetStateAction } from "react";
+import useSWR, { useSWRConfig } from "swr";
 import { Input, Row, Col } from "antd";
 import { PaginationResponse } from "src/types/Response.type";
 import { TableComponent } from "@components/Table";
@@ -17,6 +17,7 @@ const TableContainer = ({
   itemNumber,
   searchParams = {},
   forceRerender = 0,
+  setSearchParams = (prev) => {},
 }: {
   pathName: string;
   columns: any;
@@ -26,11 +27,14 @@ const TableContainer = ({
   itemNumber?: number;
   searchParams?: object;
   forceRerender?: number;
+  setSearchParams?: Dispatch<SetStateAction<object>>;
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentId, setCurrentId] = useState<number>(0);
 
-  const { data: response, mutate } = useSWR<PaginationResponse<any>>({
+  const { data: response, mutate: mutateTable } = useSWR<
+    PaginationResponse<any>
+  >({
     url: `/${pathName}`,
     args: {
       pageNumber: currentPage.toString(),
@@ -39,7 +43,7 @@ const TableContainer = ({
     },
   });
 
-  const itemList = response?.data.items.map((item: any) => ({
+  const itemList = response?.data?.items.map((item: any) => ({
     ...item,
     getDetail: () => {
       setCurrentId(item.id);
@@ -56,7 +60,13 @@ const TableContainer = ({
         <Row>
           <Col span={18}></Col>
           <Col span={6}>
-            <Search placeholder="input search text" enterButton />
+            <Search
+              placeholder="input search text"
+              enterButton
+              onSearch={(value: string) =>
+                setSearchParams((prev) => ({ ...prev, partialName: value }))
+              }
+            />
           </Col>
         </Row>
       ) : null}
@@ -65,12 +75,38 @@ const TableContainer = ({
         data={response?.data}
         columns={columns}
         itemNumber={itemNumber}
+        onChange={(_: any, filters: any, sorter: any) => {
+          for (const [key, value] of Object.entries(filters)) {
+            if (value === undefined || value === null) continue;
+            setSearchParams((prev) => ({
+              ...prev,
+              [key]: Array.isArray(value) ? value[0] : value,
+            }));
+          }
+
+          if (sorter?.order) {
+            setSearchParams((prev) => ({
+              ...prev,
+              sortBy: sorter?.column?.sortKey || sorter.columnKey,
+              sortDirection: sorter.order === "ascend" ? "ASC" : "DESC",
+            }));
+          }
+
+          mutateTable({
+            url: `/${pathName}`,
+            args: {
+              pageNumber: currentPage.toString(),
+              pageSize: "10",
+              ...searchParams,
+            },
+          });
+        }}
       />
       <DetailDataModalContainer
         currentId={currentId}
         itemList={itemList}
         setCurrentId={setCurrentId}
-        refreshTable={mutate}
+        refreshTable={mutateTable}
       >
         {children}
       </DetailDataModalContainer>

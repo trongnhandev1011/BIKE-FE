@@ -61,6 +61,16 @@ const changeStationStatus = async (
   if (refreshTable) refreshTable();
 };
 
+interface IStationModalProps {
+  currentItem?: Station | null;
+  isEdit?: boolean;
+  setIsEdit?: Dispatch<SetStateAction<boolean>>;
+  stations?: Station[];
+  setPageNumber?: Dispatch<SetStateAction<number>>;
+  refreshModal?: any;
+  refreshTable?: any;
+}
+
 const StationModal = ({
   currentItem,
   isEdit,
@@ -69,15 +79,7 @@ const StationModal = ({
   setPageNumber,
   refreshModal,
   refreshTable,
-}: {
-  currentItem?: Station | null;
-  isEdit?: boolean;
-  setIsEdit?: Dispatch<SetStateAction<boolean>>;
-  stations?: Station[];
-  setPageNumber?: Dispatch<SetStateAction<number>>;
-  refreshModal?: any;
-  refreshTable?: any;
-}) => {
+}: IStationModalProps) => {
   const [targetKeys, setTargetKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [form] = Form.useForm();
@@ -182,6 +184,8 @@ const StationModal = ({
             currentItem &&
             changeStationStatus(currentItem, refreshModal, refreshTable)
           }
+          type="primary"
+          danger={currentItem?.status === "ACTIVE"}
         >
           {currentItem?.status === "ACTIVE" ? "Deactivate" : "Activate"}
         </Button>

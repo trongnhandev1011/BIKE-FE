@@ -10,6 +10,7 @@ const tripColumns: ColumnsType<TripTableHeaderType> = [
     title: "ID",
     dataIndex: "id",
     key: "id",
+    sorter: true,
   },
   {
     title: "Start Station Name",
@@ -35,7 +36,8 @@ const tripColumns: ColumnsType<TripTableHeaderType> = [
     title: "Start Time",
     dataIndex: "startTime",
     key: "startTime",
-    sorter: (a, b) => 2 - 1,
+    sortKey: "startAt",
+    sorter: true,
   },
   {
     title: "Action",

@@ -2,16 +2,19 @@ import { Form, Input, Avatar, Space, Button, Alert } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Vehicle } from "src/types/vehicle";
 import { updateVehicleRequestStatusAPI } from "@services/backend/VehicleController";
+import { pathToImgURL } from "@utils/image";
 
-const VehicleModal = ({
-  currentItem,
-  closeModalHandle,
-}: {
+interface IVehicleModalProps {
   currentItem?: Vehicle | null;
   isEdit?: boolean;
   setIsEdit?: Dispatch<SetStateAction<boolean>>;
   closeModalHandle?: Dispatch<void>;
-}) => {
+}
+
+const VehicleModal = ({
+  currentItem,
+  closeModalHandle,
+}: IVehicleModalProps) => {
   const [apiError, setApiError] = useState<any>(false);
 
   const handleVehicleRequest = async (approval: boolean) => {
@@ -20,12 +23,12 @@ const VehicleModal = ({
         approved: approval,
       });
 
-      if(closeModalHandle) closeModalHandle();
+      if (closeModalHandle) closeModalHandle();
     } catch (e) {
       console.log(e);
       setApiError(e);
     }
-  }
+  };
 
   return (
     <div className="vehicle-modal">
@@ -37,7 +40,11 @@ const VehicleModal = ({
         disabled
       >
         <Form.Item name="image" label="Image">
-            <Avatar shape="square" size={256} src={currentItem?.image}/>
+          <Avatar
+            shape="square"
+            size={256}
+            src={currentItem?.image && pathToImgURL(currentItem?.image)}
+          />
         </Form.Item>
         <Form.Item name="id" label="ID">
           <Input defaultValue={currentItem?.id} disabled />
@@ -58,23 +65,40 @@ const VehicleModal = ({
           <Input defaultValue={currentItem?.status} />
         </Form.Item>
       </Form>
-      {currentItem?.status=="WAITING" ? (
-        <Space className="flex flex-row justify-center items-centerflex mt-5" wrap>
-          <Button onClick={()=>handleVehicleRequest(true)} type="primary" ghost>
-          Accept
+      {currentItem?.status == "WAITING" ? (
+        <Space
+          className="flex flex-row justify-center items-centerflex mt-5"
+          wrap
+        >
+          <Button
+            onClick={() => handleVehicleRequest(true)}
+            type="primary"
+            ghost
+          >
+            Accept
           </Button>
-          <Button onClick={()=>handleVehicleRequest(false)} type="primary" danger ghost>
-          Reject
+          <Button
+            onClick={() => handleVehicleRequest(false)}
+            type="primary"
+            danger
+            ghost
+          >
+            Reject
           </Button>
         </Space>
       ) : null}
-      {
-        apiError
-        ? <Space className="flex flex-row justify-center items-centerflex mt-5" wrap>
-            <Alert message="Action failed, please try again" type="error" showIcon />
-          </Space>
-        : null
-      }     
+      {apiError ? (
+        <Space
+          className="flex flex-row justify-center items-centerflex mt-5"
+          wrap
+        >
+          <Alert
+            message="Action failed, please try again"
+            type="error"
+            showIcon
+          />
+        </Space>
+      ) : null}
     </div>
   );
 };
