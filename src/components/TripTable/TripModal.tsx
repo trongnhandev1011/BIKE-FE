@@ -1,14 +1,21 @@
+import { stringToGMT } from "@utils/datetime";
 import { Form, Input, Button } from "antd";
 import { Dispatch, SetStateAction } from "react";
 import { Trip } from "src/types/trip";
+import { tripModalFormItems } from "./formMapItems";
 
-const TripModal = ({
-  currentItem,
-}: {
-  currentItem?: Trip | null;
-  isEdit?: boolean;
-  setIsEdit?: Dispatch<SetStateAction<boolean>>;
-}) => {
+const TripModal = ({ currentItem }: { currentItem?: Trip | null }) => {
+  const [form] = Form.useForm();
+
+  if (currentItem) {
+    const { startTime, endTime, ...rest } = currentItem;
+
+    form.setFieldsValue({
+      startTime: stringToGMT(startTime),
+      endTime: stringToGMT(endTime),
+      ...rest,
+    });
+  }
   return (
     <div className="trip-modal">
       <Form
@@ -17,34 +24,17 @@ const TripModal = ({
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
         disabled
+        form={form}
       >
-        <Form.Item name="id" label="ID">
-          <Input defaultValue={currentItem?.id} disabled />
-        </Form.Item>
-        <Form.Item name="passengerName" label="Passenger Name">
-          <Input defaultValue={currentItem?.passengerName} />
-        </Form.Item>
-        <Form.Item name="grabberName" label="Grabber Name">
-          <Input defaultValue={currentItem?.grabberName} />
-        </Form.Item>
-        <Form.Item name="startTime" label="Start Time">
-          <Input defaultValue={currentItem?.startTime} />
-        </Form.Item>
-        <Form.Item name="endTime" label="End Time">
-          <Input defaultValue={currentItem?.endTime} />
-        </Form.Item>
-        <Form.Item name="feedbackPoint" label="Feedback Point">
-          <Input defaultValue={currentItem?.feedbackPoint} />
-        </Form.Item>
-        <Form.Item name="status" label="Status">
-          <Input defaultValue={currentItem?.status} />
-        </Form.Item>
-        <Form.Item name="startStationName" label="Start Station Name">
-          <Input defaultValue={currentItem?.startStationName} />
-        </Form.Item>
-        <Form.Item name="endStationName" label="endStationName">
-          <Input defaultValue={currentItem?.endStationName} />
-        </Form.Item>
+        {tripModalFormItems.map((formItem) => (
+          <Form.Item
+            name={formItem.name}
+            label={formItem.label}
+            key={formItem.name}
+          >
+            <Input />
+          </Form.Item>
+        ))}
       </Form>
     </div>
   );

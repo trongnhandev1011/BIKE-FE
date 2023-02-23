@@ -6,6 +6,7 @@ const stationColumns: ColumnsType<StationTableHeaderType> = [
     title: "ID",
     dataIndex: "id",
     key: "id",
+    sorter: true,
   },
   {
     title: "Name",

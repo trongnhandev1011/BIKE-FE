@@ -8,18 +8,16 @@ import { TripTableHeaderType } from "../../types/trip";
 import type { InputRef } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import type { FilterConfirmProps } from "antd/es/table/interface";
+import { DetailTripModalContainer } from "@containers/DetailDataModal";
 
 interface ISearchParams {
-  id?: string;
   passengerName?: string;
   grabberName?: string;
   startStationName?: string;
   endStationName?: string;
-  startTime?: string;
-  endTime?: string;
 }
 
-type DataIndex = keyof TripTableHeaderType;
+type DataIndex = keyof ISearchParams;
 
 const TripScreen = () => {
   const [searchParams, setSearchParams] = useState<ISearchParams>({});
@@ -123,8 +121,9 @@ const TripScreen = () => {
         pagination
         itemNumber={10}
         searchParams={searchParams}
+        setSearchParams={setSearchParams}
       >
-        <TripModal />
+        <DetailTripModalContainer />
       </TableContainer>
     </div>
   );

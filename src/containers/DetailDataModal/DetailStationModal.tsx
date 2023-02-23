@@ -7,7 +7,7 @@ import axiosClient from "@services/backend/axiosClient";
 import { Station } from "src/types/station";
 import useSWR from "swr";
 
-export const fetcher = (url: string) =>
+export const fetcherWithParams = (url: string) =>
   axiosClient.get(url).then((res) => res.data);
 
 const DetailStationModalContainer = ({
@@ -26,7 +26,7 @@ const DetailStationModalContainer = ({
     PaginationResponse<any>
   >(
     (pageNumber) => `/stations?pageNumber=${pageNumber + 1}&pageSize=10`,
-    fetcher
+    fetcherWithParams
   );
 
   const { data: currentStationResponse, mutate: mutateModal } = useSWR<

@@ -8,15 +8,26 @@ import { UserTableHeaderType } from "../../types/user";
 import type { InputRef } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import type { FilterConfirmProps } from "antd/es/table/interface";
-import Highlighter from "react-highlight-words";
+import { DetailUserModalContainer } from "@containers/DetailDataModal";
+
+interface ISearchParams {
+  partialName?: string;
+  email?: string;
+  phone?: string;
+}
+
+const nameToSearchParam = {
+  name: "partialName",
+  email: "email",
+  phone: "phone",
+};
+
+type DataIndex = "name" | "email" | "phone";
 
 const UserScreen = () => {
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const [columnData, setColumnData] = useState([]);
+  const [searchParams, setSearchParams] = useState<ISearchParams>({});
+  const [forceRerender, setForceRerender] = useState<number>(0);
   const searchInput = useRef<InputRef>(null);
-
-  type DataIndex = keyof UserTableHeaderType;
 
   const handleSearch = (
     selectedKeys: string[],
@@ -24,25 +35,24 @@ const UserScreen = () => {
     dataIndex: DataIndex
   ) => {
     confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-
-  const handleReset = (clearFilters: () => void) => {
-    clearFilters();
-    setSearchText("");
+    if (!!selectedKeys[0]) {
+      setSearchParams({
+        ...searchParams,
+        [nameToSearchParam[dataIndex]]: selectedKeys[0],
+      });
+    } else {
+      setSearchParams((prev: any) => {
+        let copy = prev;
+        delete copy[dataIndex as DataIndex];
+        return copy;
+      });
+    }
   };
 
   const getColumnSearchProps = (
     dataIndex: DataIndex
   ): ColumnType<UserTableHeaderType> => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, close }) => (
       <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
         <Input
           ref={searchInput}
@@ -69,13 +79,6 @@ const UserScreen = () => {
             Search
           </Button>
           <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-          <Button
             type="link"
             size="small"
             onClick={() => {
@@ -90,27 +93,6 @@ const UserScreen = () => {
     filterIcon: (filtered: boolean) => (
       <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ""}
-        />
-      ) : (
-        text
-      ),
   });
 
   return (
@@ -118,20 +100,31 @@ const UserScreen = () => {
       <Typography.Title className="ml-5" level={2}>
         User Management
       </Typography.Title>
+      <Button
+        onClick={() => {
+          setForceRerender((forceRerender) => forceRerender + 1);
+          setSearchParams({});
+        }}
+      >
+        Reset
+      </Button>
       <TableContainer
+        forceRerender={forceRerender}
         pathName="accounts"
         columns={UserTableColumn.map(
           (column: ColumnType<UserTableHeaderType>, index) => ({
             ...column,
-            ...(column?.dataIndex
+            ...(!!column.dataIndex &&
+            ["email", "name", "phone"].includes(column.dataIndex.toString())
               ? getColumnSearchProps(column.dataIndex as DataIndex)
               : {}),
           })
         )}
         pagination
         itemNumber={10}
+        searchParams={searchParams}
       >
-        <UserModal />
+        <DetailUserModalContainer />
       </TableContainer>
     </div>
   );

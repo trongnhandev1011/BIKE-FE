@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import type { ColumnsType, ColumnType } from "antd/es/table";
+import type { ColumnType } from "antd/es/table";
 import { VehicleRequestTableColumn } from "@containers/TableColumn";
 import { TableContainer } from "@containers/Table";
 import VehicleModal from "@components/VehicleRequestTable/VehicleModal";
@@ -8,15 +8,19 @@ import { VehicleRequestTableHeaderType } from "../../types/vehicle";
 import type { InputRef } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import type { FilterConfirmProps } from "antd/es/table/interface";
-import Highlighter from "react-highlight-words";
+import { DetailVehicleModalContainer } from "@containers/DetailDataModal";
+
+interface ISearchParams {
+  brand?: string;
+  licensePlate?: string;
+}
+
+type DataIndex = keyof VehicleRequestTableHeaderType;
 
 const VehicleRequestScreen = () => {
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const [columnData, setColumnData] = useState([]);
+  const [searchParams, setSearchParams] = useState<object>({});
+  const [forceRerender, setForceRerender] = useState<number>(0);
   const searchInput = useRef<InputRef>(null);
-
-  type DataIndex = keyof VehicleRequestTableHeaderType;
 
   const handleSearch = (
     selectedKeys: string[],
@@ -24,25 +28,21 @@ const VehicleRequestScreen = () => {
     dataIndex: DataIndex
   ) => {
     confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-
-  const handleReset = (clearFilters: () => void) => {
-    clearFilters();
-    setSearchText("");
+    if (!!selectedKeys[0]) {
+      setSearchParams({ ...searchParams, [dataIndex]: selectedKeys[0] });
+    } else {
+      setSearchParams((prev: any) => {
+        let copy = prev;
+        delete copy[dataIndex as DataIndex];
+        return copy;
+      });
+    }
   };
 
   const getColumnSearchProps = (
     dataIndex: DataIndex
   ): ColumnType<VehicleRequestTableHeaderType> => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, close }) => (
       <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
         <Input
           ref={searchInput}
@@ -69,13 +69,6 @@ const VehicleRequestScreen = () => {
             Search
           </Button>
           <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-          <Button
             type="link"
             size="small"
             onClick={() => {
@@ -90,48 +83,42 @@ const VehicleRequestScreen = () => {
     filterIcon: (filtered: boolean) => (
       <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ""}
-        />
-      ) : (
-        text
-      ),
   });
 
   return (
-    <div className="vehicle-request-page" style={{ height: "calc(100vh - 64px)" }}>
+    <div
+      className="vehicle-request-page"
+      style={{ height: "calc(100vh - 64px)" }}
+    >
       <Typography.Title className="ml-5" level={2}>
         Vehicle Request Management
       </Typography.Title>
+      <Button
+        onClick={() => {
+          setSearchParams({});
+          setForceRerender((forceRerender) => forceRerender + 1);
+        }}
+      >
+        Reset
+      </Button>
       <TableContainer
+        forceRerender={forceRerender}
         pathName="vehicles"
         columns={VehicleRequestTableColumn.map(
           (column: ColumnType<VehicleRequestTableHeaderType>, index) => ({
             ...column,
-            ...(column?.dataIndex
+            ...(!!column.dataIndex &&
+            ["brand", "licencePlate"].includes(column.dataIndex.toString())
               ? getColumnSearchProps(column.dataIndex as DataIndex)
               : {}),
           })
         )}
         pagination
         itemNumber={10}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
       >
-        <VehicleModal />
+        <DetailVehicleModalContainer />
       </TableContainer>
     </div>
   );
