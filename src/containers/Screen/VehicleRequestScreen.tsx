@@ -9,6 +9,7 @@ import type { InputRef } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 import { DetailVehicleModalContainer } from "@containers/DetailDataModal";
+import FilterDisplay from "./FilterDisplay";
 
 interface ISearchParams {
   brand?: string;
@@ -32,7 +33,7 @@ const VehicleRequestScreen = () => {
       setSearchParams({ ...searchParams, [dataIndex]: selectedKeys[0] });
     } else {
       setSearchParams((prev: any) => {
-        let copy = prev;
+        let copy = JSON.parse(JSON.stringify(prev));
         delete copy[dataIndex as DataIndex];
         return copy;
       });
@@ -90,17 +91,12 @@ const VehicleRequestScreen = () => {
       className="vehicle-request-page"
       style={{ height: "calc(100vh - 64px)" }}
     >
-      <Typography.Title className="ml-5" level={2}>
-        Vehicle Request Management
-      </Typography.Title>
-      <Button
-        onClick={() => {
-          setSearchParams({});
-          setForceRerender((forceRerender) => forceRerender + 1);
-        }}
-      >
-        Reset
-      </Button>
+      <Typography.Title level={2}>Vehicle Request Management</Typography.Title>
+      <FilterDisplay
+        setForceRerender={setForceRerender}
+        setSearchParams={setSearchParams}
+        searchParams={searchParams}
+      />
       <TableContainer
         forceRerender={forceRerender}
         pathName="vehicles"
@@ -114,7 +110,7 @@ const VehicleRequestScreen = () => {
           })
         )}
         pagination
-        itemNumber={10}
+        itemNumber={6}
         searchParams={searchParams}
         setSearchParams={setSearchParams}
       >

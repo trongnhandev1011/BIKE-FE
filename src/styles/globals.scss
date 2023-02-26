@@ -28,3 +28,37 @@ a {
     background: black;
   }
 }
+
+.rounded-btn-antd {
+  padding: 0.5rem 1rem;
+  width: auto;
+  height: auto;
+  border-radius: 9999px;
+}
+
+.ant-input-search-with-button {
+  .ant-input {
+    padding: 0.5rem 1.25rem;
+    border-top-left-radius: 9999px;
+    border-bottom-left-radius: 9999px;
+  }
+  .ant-input-search-button {
+    height: 2.475rem;
+
+    border-top-right-radius: 9999px !important;
+    border-bottom-right-radius: 9999px !important;
+  }
+}
+
+.ant-form-item {
+  margin-bottom: 0.75rem;
+}
+
+.ant-modal[role="dialog"] {
+  width: fit-content !important;
+}
+
+.ant-form-item-label {
+  overflow: visible !important;
+  max-width: none;
+}

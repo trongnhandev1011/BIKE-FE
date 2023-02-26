@@ -13,7 +13,6 @@ const TableContainer = ({
   columns,
   children,
   pagination,
-  inputSearch,
   itemNumber,
   searchParams = {},
   forceRerender = 0,
@@ -23,22 +22,23 @@ const TableContainer = ({
   columns: any;
   children?: any;
   pagination?: boolean;
-  inputSearch?: boolean;
   itemNumber?: number;
-  searchParams?: object;
+  searchParams?: any;
   forceRerender?: number;
   setSearchParams?: Dispatch<SetStateAction<object>>;
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentId, setCurrentId] = useState<number>(0);
 
-  const { data: response, mutate: mutateTable } = useSWR<
-    PaginationResponse<any>
-  >({
+  const {
+    data: response,
+    mutate: mutateTable,
+    isLoading,
+  } = useSWR<PaginationResponse<any>>({
     url: `/${pathName}`,
     args: {
       pageNumber: currentPage.toString(),
-      pageSize: "10",
+      pageSize: itemNumber,
       ...searchParams,
     },
   });
@@ -56,21 +56,8 @@ const TableContainer = ({
 
   return (
     <div className="table-container">
-      {inputSearch ? (
-        <Row>
-          <Col span={18}></Col>
-          <Col span={6}>
-            <Search
-              placeholder="input search text"
-              enterButton
-              onSearch={(value: string) =>
-                setSearchParams((prev) => ({ ...prev, partialName: value }))
-              }
-            />
-          </Col>
-        </Row>
-      ) : null}
       <TableComponent
+        loading={isLoading}
         forceRerender={forceRerender}
         data={response?.data}
         columns={columns}
@@ -90,6 +77,11 @@ const TableContainer = ({
               sortBy: sorter?.column?.sortKey || sorter.columnKey,
               sortDirection: sorter.order === "ascend" ? "ASC" : "DESC",
             }));
+          } else if (searchParams?.sortBy) {
+            let copy = JSON.parse(JSON.stringify(searchParams)) as any;
+            delete copy["sortBy"];
+            delete copy["sortDirection"];
+            setSearchParams(copy);
           }
 
           mutateTable({
@@ -99,7 +91,7 @@ const TableContainer = ({
               pageSize: "10",
               ...searchParams,
             },
-          });
+          } as any);
         }}
       />
       <DetailDataModalContainer
@@ -112,6 +104,7 @@ const TableContainer = ({
       </DetailDataModalContainer>
       {pagination ? (
         <Pagination
+          itemNumber={itemNumber}
           total={response?.data?.totalSize}
           setCurrentPage={setCurrentPage}
         />

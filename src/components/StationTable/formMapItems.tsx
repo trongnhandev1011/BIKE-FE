@@ -10,9 +10,10 @@ export type StationFormFields =
   | "description"
   | "address"
   | "longitude"
-  | "latitude";
+  | "latitude"
+  | "status";
 
-export const addStationFormItems: IStationModalFormItems[] = [
+export const stationModalFormItems: IStationModalFormItems[] = [
   {
     name: "name",
     label: "Name",
@@ -24,27 +25,5 @@ export const addStationFormItems: IStationModalFormItems[] = [
   {
     name: "address",
     label: "Address",
-  },
-  {
-    name: "longitude",
-    label: "Longitude",
-  },
-  {
-    name: "latitude",
-    label: "Latitude",
-  },
-];
-
-export const stationModalFormItems: IStationModalFormItems[] = [
-  {
-    name: "id",
-    label: "ID",
-    disabled: true,
-  },
-  ...addStationFormItems,
-  {
-    name: "status",
-    label: "Status",
-    disabled: true,
   },
 ];

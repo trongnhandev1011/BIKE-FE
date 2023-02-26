@@ -23,6 +23,7 @@ const StationFormValidation = {
     MAX_NUMBER_VALIDATOR("latitude", 90),
     MIN_NUMBER_VALIDATOR("latitude", -90),
   ],
+  status: [REQUIRED_VALIDATOR("status")],
 };
 
 export default StationFormValidation;

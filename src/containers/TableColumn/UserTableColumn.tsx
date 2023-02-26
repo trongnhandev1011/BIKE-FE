@@ -25,10 +25,10 @@ const userColumns: ColumnsType<UserTableHeaderType> = [
     title: "Phone Number",
     dataIndex: "phone",
     key: "phone",
+    align: "right",
   },
   {
     title: "Status",
-    //dataIndex: "status",
     key: "status",
     render: (record) => (
       <Tag color={record.status === "ACTIVE" ? "green" : "red"}>
@@ -39,7 +39,11 @@ const userColumns: ColumnsType<UserTableHeaderType> = [
   {
     title: "Action",
     key: "action",
-    render: (record) => <a onClick={record?.getDetail}>See detail</a>,
+    render: (record) => (
+      <a onClick={record?.getDetail} className=" font-semibold text-blue-500">
+        See detail
+      </a>
+    ),
   },
 ];
 
