@@ -79,14 +79,6 @@ const Login: React.FC<Props> = () => {
               <Input.Password />
             </Form.Item>
 
-            <Form.Item
-              name="remember"
-              valuePropName="checked"
-              wrapperCol={{ offset: 4, span: 20 }}
-            >
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-
             <Form.Item wrapperCol={{ offset: 12, span: 12 }}>
               <Button type="primary" htmlType="submit">
                 Submit

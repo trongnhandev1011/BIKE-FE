@@ -12,6 +12,7 @@ const vehicleRequestColumns: ColumnsType<VehicleRequestTableHeaderType> = [
     dataIndex: "id",
     key: "id",
     sorter: true,
+    align: "right",
   },
   {
     title: "Brand Name",
@@ -78,7 +79,11 @@ const vehicleRequestColumns: ColumnsType<VehicleRequestTableHeaderType> = [
   {
     title: "Action",
     key: "action",
-    render: (record) => <a onClick={record?.getDetail}>See detail</a>,
+    render: (record) => (
+      <a onClick={record?.getDetail} className=" font-semibold text-blue-500">
+        See detail
+      </a>
+    ),
   },
 ];
 

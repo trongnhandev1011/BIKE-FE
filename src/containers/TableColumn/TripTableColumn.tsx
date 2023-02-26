@@ -4,13 +4,15 @@ import type { InputRef } from "antd";
 import { Button, Input, Space, Table } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import type { FilterConfirmProps } from "antd/es/table/interface";
+import { stringToGMT, stringToReadableGMT } from "@utils/datetime";
 
-const tripColumns: ColumnsType<TripTableHeaderType> = [
+const tripColumns: any = [
   {
     title: "ID",
     dataIndex: "id",
     key: "id",
     sorter: true,
+    align: "right",
   },
   {
     title: "Start Station Name",
@@ -34,15 +36,23 @@ const tripColumns: ColumnsType<TripTableHeaderType> = [
   },
   {
     title: "Start Time",
-    dataIndex: "startTime",
     key: "startTime",
     sortKey: "startAt",
     sorter: true,
+    render: (record: any) => {
+      return (
+        record?.startTime && <div>{stringToReadableGMT(record?.startTime)}</div>
+      );
+    },
   },
   {
     title: "Action",
     key: "action",
-    render: (record) => <a onClick={record?.getDetail}>See detail</a>,
+    render: (record: any) => (
+      <a onClick={record?.getDetail} className=" font-semibold text-blue-500">
+        See detail
+      </a>
+    ),
   },
 ];
 

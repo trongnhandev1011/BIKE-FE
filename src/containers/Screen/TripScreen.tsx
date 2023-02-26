@@ -9,12 +9,15 @@ import type { InputRef } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 import { DetailTripModalContainer } from "@containers/DetailDataModal";
+import FilterDisplay from "./FilterDisplay";
 
 interface ISearchParams {
   passengerName?: string;
   grabberName?: string;
   startStationName?: string;
   endStationName?: string;
+  sortDirection?: string;
+  sortBy?: string;
 }
 
 type DataIndex = keyof ISearchParams;
@@ -34,7 +37,7 @@ const TripScreen = () => {
       setSearchParams({ ...searchParams, [dataIndex]: selectedKeys[0] });
     } else {
       setSearchParams((prev) => {
-        let copy = prev;
+        let copy = JSON.parse(JSON.stringify(prev));
         delete copy[dataIndex as DataIndex];
         return copy;
       });
@@ -44,13 +47,7 @@ const TripScreen = () => {
   const getColumnSearchProps = (
     dataIndex: DataIndex
   ): ColumnType<TripTableHeaderType> => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, close }) => (
       <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
         <Input
           ref={searchInput}
@@ -95,22 +92,17 @@ const TripScreen = () => {
 
   return (
     <div className="trip-page" style={{ height: "calc(100vh - 64px)" }}>
-      <Typography.Title className="ml-5" level={2}>
-        Trip Management
-      </Typography.Title>
-      <Button
-        onClick={() => {
-          setForceRerender((forceRerender) => forceRerender + 1);
-          setSearchParams({});
-        }}
-      >
-        Reset
-      </Button>
+      <Typography.Title level={2}>Trip Management</Typography.Title>
+      <FilterDisplay
+        setForceRerender={setForceRerender}
+        setSearchParams={setSearchParams}
+        searchParams={searchParams}
+      />
       <TableContainer
         forceRerender={forceRerender}
         pathName="trips"
         columns={TripTableColumn.map(
-          (column: ColumnType<TripTableHeaderType>, index) => ({
+          (column: ColumnType<TripTableHeaderType>) => ({
             ...column,
             ...(!!column.dataIndex &&
             !["id", "startTime"].includes(column.dataIndex.toString())
@@ -119,7 +111,7 @@ const TripScreen = () => {
           })
         )}
         pagination
-        itemNumber={10}
+        itemNumber={6}
         searchParams={searchParams}
         setSearchParams={setSearchParams}
       >

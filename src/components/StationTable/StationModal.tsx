@@ -1,4 +1,4 @@
-import { Form, Input, Button, Transfer } from "antd";
+import { Form, Input, Button, Transfer, Row, Col } from "antd";
 import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import { Station } from "src/types/station";
 import type { TransferDirection, TransferListProps } from "antd/es/transfer";
@@ -96,10 +96,11 @@ const StationModal = ({
   return (
     <div className="station-modal">
       <Form
-        className="mt-5"
+        layout="vertical"
+        className="mt-5 "
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
+        style={{ maxWidth: "850px" }}
         disabled={!isEdit}
         onFinish={(values) =>
           onFinish(
@@ -114,82 +115,130 @@ const StationModal = ({
         }}
         form={form}
       >
-        {stationModalFormItems.map((formItem) => (
-          <Form.Item
-            name={formItem.name}
-            label={formItem.label}
-            key={formItem.name}
-            rules={StationFormValidation[formItem.name as StationFormFields]}
-          >
-            <Input disabled={formItem?.disabled} />
-          </Form.Item>
-        ))}
-        <Transfer
-          disabled={!isEdit}
-          className="flex justify-center"
-          dataSource={
-            stations
-              ?.filter(
-                (station) =>
-                  station.status === "ACTIVE" && station.id !== currentItem?.id
-              )
-              .map((station) => ({
-                key: station.id.toString(),
-                title: station.name,
-                description: station.description,
-              })) || []
-          }
-          titles={["Source", "Target"]}
-          targetKeys={targetKeys}
-          selectedKeys={selectedKeys}
-          onChange={(nextTargetKeys: string[]) => {
-            setTargetKeys(nextTargetKeys);
-          }}
-          onSelectChange={(
-            sourceSelectedKeys: string[],
-            targetSelectedKeys: string[]
-          ) => {
-            setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
-          }}
-          render={(item) => item.title}
-          footer={(
-            _: TransferListProps<any>,
-            info?:
-              | {
-                  direction: TransferDirection;
-                }
-              | undefined
-          ) => renderFooter(setPageNumber, info?.direction) as any}
-        />
-        {isEdit ? (
-          <div className="flex justify-center">
-            <Button htmlType="submit">Save</Button>
-          </div>
-        ) : null}
-      </Form>
-      <div className="flex justify-center mt-2">
-        {!isEdit ? (
-          <Button
-            className="mr-2"
-            onClick={() => {
-              if (setIsEdit) setIsEdit(true);
-            }}
-          >
-            Edit
-          </Button>
-        ) : null}
+        <div className="flex">
+          <div className="flex flex-col items-center ">
+            <div className=" flex justify-center w-full gap-5">
+              <Form.Item
+                name="id"
+                label="ID"
+                rules={StationFormValidation["id"]}
+              >
+                <Input disabled style={{ width: "11.875rem" }} />
+              </Form.Item>
+              <Form.Item
+                name="status"
+                label="Status"
+                rules={StationFormValidation["status"]}
+              >
+                <Input disabled style={{ width: "11.875rem" }} />
+              </Form.Item>
+            </div>
 
-        <Button
-          onClick={() =>
-            currentItem &&
-            changeStationStatus(currentItem, refreshModal, refreshTable)
-          }
-          type="primary"
-          danger={currentItem?.status === "ACTIVE"}
-        >
-          {currentItem?.status === "ACTIVE" ? "Deactivate" : "Activate"}
-        </Button>
-      </div>
+            {stationModalFormItems.map((formItem) => (
+              <Form.Item
+                name={formItem.name}
+                label={formItem.label}
+                key={formItem.name}
+                rules={
+                  StationFormValidation[formItem.name as StationFormFields]
+                }
+                className="content-center"
+              >
+                <Input
+                  disabled={formItem?.disabled}
+                  style={{ width: "25rem" }}
+                />
+              </Form.Item>
+            ))}
+
+            <div className=" flex justify-center w-full gap-5">
+              <Form.Item
+                name="longitude"
+                label="Longitude"
+                rules={StationFormValidation["longitude"]}
+              >
+                <Input disabled style={{ width: "11.875rem" }} />
+              </Form.Item>
+              <Form.Item
+                name="latitude"
+                label="Latitude"
+                rules={StationFormValidation["latitude"]}
+              >
+                <Input disabled style={{ width: "11.875rem" }} />
+              </Form.Item>
+            </div>
+          </div>
+          <Transfer
+            listStyle={{
+              height: 350,
+            }}
+            disabled={!isEdit}
+            className="flex justify-center m-5"
+            dataSource={
+              stations
+                ?.filter(
+                  (station) =>
+                    station.status === "ACTIVE" &&
+                    station.id !== currentItem?.id
+                )
+                .map((station) => ({
+                  key: station.id.toString(),
+                  title: station.name,
+                  description: station.description,
+                })) || []
+            }
+            titles={["Source", "Target"]}
+            targetKeys={targetKeys}
+            selectedKeys={selectedKeys}
+            onChange={(nextTargetKeys: string[]) => {
+              setTargetKeys(nextTargetKeys);
+            }}
+            onSelectChange={(
+              sourceSelectedKeys: string[],
+              targetSelectedKeys: string[]
+            ) => {
+              setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
+            }}
+            render={(item) => item.title}
+            footer={(
+              _: TransferListProps<any>,
+              info?:
+                | {
+                    direction: TransferDirection;
+                  }
+                | undefined
+            ) => renderFooter(setPageNumber, info?.direction) as any}
+          />
+        </div>
+
+        <div className="flex justify-center mt-2 gap-3">
+          {!isEdit ? (
+            <Button
+              onClick={() => {
+                if (setIsEdit) setIsEdit(true);
+              }}
+              disabled={false}
+            >
+              Edit
+            </Button>
+          ) : (
+            <div className="flex justify-center">
+              <Button htmlType="submit">Save</Button>
+            </div>
+          )}
+
+          <Button
+            onClick={() =>
+              currentItem &&
+              changeStationStatus(currentItem, refreshModal, refreshTable)
+            }
+            type="primary"
+            danger={currentItem?.status === "ACTIVE"}
+          >
+            {currentItem?.status === "ACTIVE" ? "Deactivate" : "Activate"}
+          </Button>
+        </div>
+      </Form>
     </div>
   );
 };

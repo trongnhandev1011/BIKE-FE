@@ -9,6 +9,7 @@ import type { InputRef } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 import { DetailUserModalContainer } from "@containers/DetailDataModal";
+import FilterDisplay from "./FilterDisplay";
 
 interface ISearchParams {
   partialName?: string;
@@ -42,7 +43,7 @@ const UserScreen = () => {
       });
     } else {
       setSearchParams((prev: any) => {
-        let copy = prev;
+        let copy = JSON.parse(JSON.stringify(prev));
         delete copy[dataIndex as DataIndex];
         return copy;
       });
@@ -97,17 +98,12 @@ const UserScreen = () => {
 
   return (
     <div className="user-page" style={{ height: "calc(100vh - 64px)" }}>
-      <Typography.Title className="ml-5" level={2}>
-        User Management
-      </Typography.Title>
-      <Button
-        onClick={() => {
-          setForceRerender((forceRerender) => forceRerender + 1);
-          setSearchParams({});
-        }}
-      >
-        Reset
-      </Button>
+      <Typography.Title level={2}>User Management</Typography.Title>
+      <FilterDisplay
+        setForceRerender={setForceRerender}
+        setSearchParams={setSearchParams}
+        searchParams={searchParams}
+      />
       <TableContainer
         forceRerender={forceRerender}
         pathName="accounts"
@@ -121,7 +117,7 @@ const UserScreen = () => {
           })
         )}
         pagination
-        itemNumber={10}
+        itemNumber={6}
         searchParams={searchParams}
       >
         <DetailUserModalContainer />

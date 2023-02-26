@@ -16,6 +16,9 @@ const VehicleModal = ({
   closeModalHandle,
 }: IVehicleModalProps) => {
   const [apiError, setApiError] = useState<any>(false);
+  const [form] = Form.useForm();
+
+  form.setFieldsValue({ ...currentItem });
 
   const handleVehicleRequest = async (approval: boolean) => {
     try {
@@ -33,37 +36,41 @@ const VehicleModal = ({
   return (
     <div className="vehicle-modal">
       <Form
+        layout="vertical"
         className="mt-5"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 700 }}
         disabled
+        form={form}
       >
-        <Form.Item name="image" label="Image">
+        <div className="flex gap-5 items-center">
           <Avatar
             shape="square"
             size={256}
             src={currentItem?.image && pathToImgURL(currentItem?.image)}
           />
-        </Form.Item>
-        <Form.Item name="id" label="ID">
-          <Input defaultValue={currentItem?.id} disabled />
-        </Form.Item>
-        <Form.Item name="brand" label="Vehicle Brand">
-          <Input defaultValue={currentItem?.brand} />
-        </Form.Item>
-        <Form.Item name="licencePlate" label="Licence Plate">
-          <Input defaultValue={currentItem?.licencePlate} />
-        </Form.Item>
-        <Form.Item name="description" label="Description">
-          <Input defaultValue={currentItem?.description} />
-        </Form.Item>
-        <Form.Item name="type" label="Vehicle Type">
-          <Input defaultValue={currentItem?.type} />
-        </Form.Item>
-        <Form.Item name="status" label="Status">
-          <Input defaultValue={currentItem?.status} />
-        </Form.Item>
+          <div>
+            <Form.Item name="id" label="ID">
+              <Input disabled style={{ width: "25rem" }} />
+            </Form.Item>
+            <Form.Item name="brand" label="Vehicle Brand">
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <Form.Item name="licencePlate" label="Licence Plate">
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <Form.Item name="description" label="Description">
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <Form.Item name="type" label="Vehicle Type">
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <Form.Item name="status" label="Status">
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+          </div>
+        </div>
       </Form>
       {currentItem?.status == "WAITING" ? (
         <Space
@@ -85,6 +92,18 @@ const VehicleModal = ({
           >
             Reject
           </Button>
+        </Space>
+      ) : null}
+      {apiError ? (
+        <Space
+          className="flex flex-row justify-center items-centerflex mt-5"
+          wrap
+        >
+          <Alert
+            message="Action failed, please try again"
+            type="error"
+            showIcon
+          />
         </Space>
       ) : null}
       {apiError ? (

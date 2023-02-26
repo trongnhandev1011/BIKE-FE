@@ -31,52 +31,76 @@ const UserModal = ({ currentItem, closeModalHandle }: IUserModalProps) => {
 
   return (
     <div className="user-modal">
-      <Space
-        direction="vertical"
-        size={16}
-        className="flex flex-col justify-center items-center mt-5"
-      >
-        <Avatar
-          shape="square"
-          size={125}
-          src={currentItem?.avatar && pathToImgURL(currentItem?.avatar)}
-        />
-      </Space>
       <Form
+        layout="vertical"
         className="mt-5"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 14 }}
-        style={{ maxWidth: 600 }}
+        style={{ maxWidth: 900 }}
         disabled
         form={form}
       >
-        <Form.Item name="id" label="ID">
-          <Input defaultValue={currentItem?.id} disabled />
-        </Form.Item>
-        <Form.Item name="email" label="Email Address">
-          <Input defaultValue={currentItem?.email} />
-        </Form.Item>
-        <Form.Item name="name" label="User's Name">
-          <Input defaultValue={currentItem?.name} />
-        </Form.Item>
-        <Form.Item name="phone" label="Phone Number">
-          <Input defaultValue={currentItem?.phone} />
-        </Form.Item>
-        {currentItem?.card && (
-          <Form.Item name="card" label="Student Card">
-            <Image
-              src={pathToImgURL(currentItem?.card)}
-              alt="Student Card Image"
-              width="100%"
-              height="100%"
-              layout="responsive"
-              objectFit="contain"
-            />
-          </Form.Item>
-        )}
-        <Form.Item name="averagePoint" label="Feedback Point">
-          <Input defaultValue={currentItem?.averagePoint} />
-        </Form.Item>
+        <div className="flex gap-5 items-center">
+          <div className="flex flex-col items-center">
+            <Space
+              direction="vertical"
+              size={16}
+              className="flex flex-col justify-center items-center mt-5"
+            >
+              <div>Avatar</div>
+              <Avatar
+                shape="square"
+                size={140}
+                src={currentItem?.avatar && pathToImgURL(currentItem?.avatar)}
+              />
+
+              {currentItem?.card && (
+                <div>
+                  <div className="mb-3 ml-3">Student card</div>
+                  <Image
+                    src={pathToImgURL(currentItem?.card)}
+                    alt="Student Card Image"
+                    width="13.75rem"
+                    height="10.625rem"
+                  />
+                </div>
+              )}
+            </Space>
+          </div>
+          <div>
+            <Form.Item name="id" label="ID">
+              <Input
+                defaultValue={currentItem?.id}
+                disabled
+                style={{ width: "25rem" }}
+              />
+            </Form.Item>
+            <Form.Item name="email" label="Email Address">
+              <Input
+                defaultValue={currentItem?.email}
+                style={{ width: "25rem" }}
+              />
+            </Form.Item>
+            <Form.Item name="name" label="User's Name">
+              <Input
+                defaultValue={currentItem?.name}
+                style={{ width: "25rem" }}
+              />
+            </Form.Item>
+            <Form.Item name="phone" label="Phone Number">
+              <Input
+                defaultValue={currentItem?.phone}
+                style={{ width: "25rem" }}
+              />
+            </Form.Item>
+            <Form.Item name="averagePoint" label="Feedback Point">
+              <Input
+                defaultValue={currentItem?.averagePoint}
+                style={{ width: "25rem" }}
+              />
+            </Form.Item>
+          </div>
+        </div>
       </Form>
 
       <Space
@@ -92,6 +116,18 @@ const UserModal = ({ currentItem, closeModalHandle }: IUserModalProps) => {
           {isActive ? "Ban" : "Unban"}
         </Button>
       </Space>
+      {apiError ? (
+        <Space
+          className="flex flex-row justify-center items-centerflex mt-5"
+          wrap
+        >
+          <Alert
+            message="Update failed, please try again"
+            type="error"
+            showIcon
+          />
+        </Space>
+      ) : null}
       {apiError ? (
         <Space
           className="flex flex-row justify-center items-centerflex mt-5"

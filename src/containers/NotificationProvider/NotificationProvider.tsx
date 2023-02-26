@@ -10,6 +10,7 @@ export default function NotificationProvider({ children }: { children: any }) {
   useEffect(() => {
     const socket = new SockJS("http://52.74.214.224:8080/ws");
     const stompClient = Stomp.over(socket);
+    stompClient.debug = () => {}; //do nothing
     if (user?.id) {
       stompClient.connect({}, () => {
         stompClient.subscribe(`/user/${user?.id}/notifications`, (mess) => {

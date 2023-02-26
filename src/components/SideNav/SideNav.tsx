@@ -23,6 +23,7 @@ export default function SideNav({
           background: colorBgContainer,
           borderRadius: 20,
           width: "fit-content",
+          height: "fit-content",
         }}
         width={230}
       >
@@ -52,12 +53,9 @@ export default function SideNav({
           items={navElements}
         />
         <div className="flex justify-center items-center flex-col">
+          <div className="rectangle-divider" style={{ marginTop: "50%" }}></div>
           <div
-            className="rectangle-divider"
-            style={{ marginTop: "100%" }}
-          ></div>
-          <div
-            className="flex justify-center items-center mt-5"
+            className="flex justify-center items-center my-3"
             style={{ cursor: "pointer" }}
             onClick={() => logoutHandler()}
           >
