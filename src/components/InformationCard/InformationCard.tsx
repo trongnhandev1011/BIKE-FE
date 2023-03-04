@@ -1,6 +1,12 @@
 import { CarOutlined } from "@ant-design/icons";
 
-const InformationCard = ({ data }: { data: any }) => {
+const InformationCard = ({
+  type,
+  number,
+}: {
+  type: string;
+  number?: number;
+}) => {
   return (
     <div
       className="information-card-component flex justify-between"
@@ -8,10 +14,12 @@ const InformationCard = ({ data }: { data: any }) => {
     >
       <div>
         <div style={{ color: "#8C8C8C", fontWeight: "bold" }}>
-          {"Today's trip"}
+          {`Number of ${type}`}
         </div>
         <div className="flex">
-          <div style={{ fontWeight: "bold", fontSize: 28 }}>10000 trip</div>
+          <div style={{ fontWeight: "bold", fontSize: 28 }}>
+            {number} {type}s
+          </div>
           <div className="ml-2" style={{ color: "green" }}>
             +30%
           </div>

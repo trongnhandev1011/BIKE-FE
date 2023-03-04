@@ -17,7 +17,7 @@ export default function SideNav({ navElements }: { navElements: any }) {
 
   const logoutHandler = () => {
     logout();
-    router.push("/login");
+    router.push("/");
   };
 
   return (

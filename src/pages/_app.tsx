@@ -9,6 +9,7 @@ import { AuthProvider } from "@containers/AuthProvider";
 import { fetcher } from "@utils/common";
 import { WrapperLayout } from "@layouts/WrapperLayout";
 import { NotificationProvider } from "@containers/NotificationProvider";
+import { ErrorBoundary } from "@containers/ErrorBoundary";
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -26,7 +27,9 @@ export default function MyApp(props: AppProps) {
             }}
           >
             <WrapperLayout>
-              <Component {...pageProps} />
+              <ErrorBoundary>
+                <Component {...pageProps} />
+              </ErrorBoundary>
             </WrapperLayout>
           </SWRConfig>
         </NotificationProvider>

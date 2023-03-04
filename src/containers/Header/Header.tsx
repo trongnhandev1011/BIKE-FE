@@ -19,7 +19,7 @@ function Header() {
           isAuthUser ? (
             <Button onClick={() => logout()}>Logout</Button>
           ) : (
-            <Button onClick={() => route.push("/login")}>Login</Button>
+            <Button onClick={() => route.push("/")}>Login</Button>
           )
         }
         navElements={items1}

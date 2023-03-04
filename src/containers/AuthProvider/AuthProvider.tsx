@@ -23,7 +23,7 @@ export default function AuthProvider({ children }: { children: any }) {
     ) {
       //ignore
     } else if (authPage.includes(route.pathname) && !isAuthUser) {
-      route.push("/login");
+      route.push("/");
     }
   }, [route.pathname, isAuthUser]);
 
