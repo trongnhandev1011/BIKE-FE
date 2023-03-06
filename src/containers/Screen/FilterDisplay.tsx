@@ -33,7 +33,7 @@ const FilterDisplay = ({
       >
         Clear all filters
       </Button>
-      {Object.entries(searchParams).map(
+      {Object.entries(searchParams)?.map(
         ([key, value]: [key: string, value: any]) => {
           if (key === "sortDirection") return null;
           return key === "sortBy" ? (

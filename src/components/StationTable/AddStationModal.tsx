@@ -59,7 +59,7 @@ const AddStationModal = ({
       >
         <div className="flex">
           <div>
-            {stationModalFormItems.map((formItem) => (
+            {stationModalFormItems?.map((formItem) => (
               <Form.Item
                 name={formItem.name}
                 label={formItem.label}

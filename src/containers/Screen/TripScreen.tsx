@@ -101,7 +101,7 @@ const TripScreen = () => {
       <TableContainer
         forceRerender={forceRerender}
         pathName="trips"
-        columns={TripTableColumn.map(
+        columns={TripTableColumn?.map(
           (column: ColumnType<TripTableHeaderType>) => ({
             ...column,
             ...(!!column.dataIndex &&
