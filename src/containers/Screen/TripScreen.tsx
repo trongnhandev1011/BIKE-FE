@@ -105,7 +105,9 @@ const TripScreen = () => {
           (column: ColumnType<TripTableHeaderType>) => ({
             ...column,
             ...(!!column.dataIndex &&
-            !["id", "startTime"].includes(column.dataIndex.toString())
+            !["id", "startTime", "postedStartTime"].includes(
+              column.dataIndex.toString()
+            )
               ? getColumnSearchProps(column.dataIndex as DataIndex)
               : {}),
           })

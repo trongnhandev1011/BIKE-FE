@@ -52,8 +52,8 @@ export default function SideNav({
           style={{ height: "100%" }}
           items={navElements}
         />
-        <div className="flex justify-center items-center flex-col">
-          <div className="rectangle-divider" style={{ marginTop: "50%" }}></div>
+        <div className="flex justify-center items-center flex-col mb-2">
+          <div className="rectangle-divider" style={{ marginTop: "20%" }}></div>
           <div
             className="flex justify-center items-center my-3"
             style={{ cursor: "pointer" }}

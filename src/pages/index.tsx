@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, notification } from "antd";
 import useAuth from "@hooks/useAuth";
 import { ContainerLayout } from "@layouts/ContainerLayout";
 import Image from "next/image";
@@ -25,7 +25,13 @@ const Login: React.FC<Props> = () => {
     password: string;
     remember: boolean;
   }) => {
-    login({ email: values.username, password: values.password });
+    if (
+      (await (
+        await login({ email: values.username, password: values.password })
+      ).type) === "auth/login/rejected"
+    ) {
+      notification.error({ description: "Login failed", message: "Login" });
+    }
   };
 
   return (

@@ -23,7 +23,7 @@ function DashboardLayout({
             style={{
               marginTop: "24px",
               background: colorBgContainer,
-              height: "95%",
+              height: "75%",
               borderRadius: "1rem",
               width: "fit-content",
             }}

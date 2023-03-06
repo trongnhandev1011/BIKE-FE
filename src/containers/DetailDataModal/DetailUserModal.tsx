@@ -7,10 +7,11 @@ import { User } from "src/types/user";
 const DetailUserModalContainer = ({
   currentItem,
   refreshTable,
+  ...rest
 }: {
-  children?: any;
   currentItem?: User | null;
   refreshTable?: any;
+  disableAdmin?: boolean;
 }) => {
   const { data: response, mutate } = useSWR<Response<User>>({
     url: `/accounts/${currentItem?.id}`,
@@ -25,6 +26,7 @@ const DetailUserModalContainer = ({
           mutate();
           refreshTable();
         }}
+        {...rest}
       />
     </div>
   );

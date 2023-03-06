@@ -8,9 +8,14 @@ import { pathToImgURL } from "@utils/image";
 interface IUserModalProps {
   currentItem?: User | null;
   closeModalHandle?: Dispatch<void>;
+  disableAdmin?: boolean;
 }
 
-const UserModal = ({ currentItem, closeModalHandle }: IUserModalProps) => {
+const UserModal = ({
+  currentItem,
+  closeModalHandle,
+  disableAdmin = false,
+}: IUserModalProps) => {
   const isActive: boolean = currentItem?.status == "ACTIVE";
   const [apiError, setApiError] = useState<any>(false);
   const [form] = Form.useForm();
@@ -45,7 +50,7 @@ const UserModal = ({ currentItem, closeModalHandle }: IUserModalProps) => {
             <Space
               direction="vertical"
               size={16}
-              className="flex flex-col justify-center items-center mt-5"
+              className="flex flex-col justify-center items-center"
             >
               <div>Avatar</div>
               <Avatar
@@ -55,13 +60,13 @@ const UserModal = ({ currentItem, closeModalHandle }: IUserModalProps) => {
               />
 
               {currentItem?.card && (
-                <div>
+                <div className=" w-full flex justify-center flex-col">
                   <div className="mb-3 ml-3">Student card</div>
-                  <Image
+                  <Avatar
+                    shape="square"
                     src={pathToImgURL(currentItem?.card)}
                     alt="Student Card Image"
-                    width="13.75rem"
-                    height="10.625rem"
+                    size={140}
                   />
                 </div>
               )}
@@ -103,31 +108,21 @@ const UserModal = ({ currentItem, closeModalHandle }: IUserModalProps) => {
         </div>
       </Form>
 
-      <Space
-        className="flex flex-row justify-center items-centerflex mt-5"
-        wrap
-      >
-        <Button
-          onClick={toggleAccountStatus}
-          type="primary"
-          danger={isActive}
-          ghost
-        >
-          {isActive ? "Ban" : "Unban"}
-        </Button>
-      </Space>
-      {apiError ? (
+      {!disableAdmin && (
         <Space
           className="flex flex-row justify-center items-centerflex mt-5"
           wrap
         >
-          <Alert
-            message="Update failed, please try again"
-            type="error"
-            showIcon
-          />
+          <Button
+            onClick={toggleAccountStatus}
+            type="primary"
+            danger={isActive}
+            ghost
+          >
+            {isActive ? "Ban" : "Unban"}
+          </Button>
         </Space>
-      ) : null}
+      )}
       {apiError ? (
         <Space
           className="flex flex-row justify-center items-centerflex mt-5"
