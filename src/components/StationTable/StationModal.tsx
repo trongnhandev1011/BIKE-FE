@@ -134,7 +134,7 @@ const StationModal = ({
               </Form.Item>
             </div>
 
-            {stationModalFormItems.map((formItem) => (
+            {stationModalFormItems?.map((formItem) => (
               <Form.Item
                 name={formItem.name}
                 label={formItem.label}
@@ -181,7 +181,7 @@ const StationModal = ({
                     station.status === "ACTIVE" &&
                     station.id !== currentItem?.id
                 )
-                .map((station) => ({
+                ?.map((station) => ({
                   key: station.id.toString(),
                   title: station.name,
                   description: station.description,

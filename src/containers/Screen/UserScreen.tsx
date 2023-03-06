@@ -107,7 +107,7 @@ const UserScreen = () => {
       <TableContainer
         forceRerender={forceRerender}
         pathName="accounts"
-        columns={UserTableColumn.map(
+        columns={UserTableColumn?.map(
           (column: ColumnType<UserTableHeaderType>, index) => ({
             ...column,
             ...(!!column.dataIndex &&

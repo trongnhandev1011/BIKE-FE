@@ -100,7 +100,7 @@ const VehicleRequestScreen = () => {
       <TableContainer
         forceRerender={forceRerender}
         pathName="vehicles"
-        columns={VehicleRequestTableColumn.map(
+        columns={VehicleRequestTableColumn?.map(
           (column: ColumnType<VehicleRequestTableHeaderType>, index) => ({
             ...column,
             ...(!!column.dataIndex &&
