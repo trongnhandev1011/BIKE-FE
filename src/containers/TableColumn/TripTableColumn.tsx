@@ -46,6 +46,18 @@ const tripColumns: any = [
     },
   },
   {
+    title: "Meet Time",
+    key: "postedStartTime",
+    sorter: true,
+    render: (record: any) => {
+      return (
+        record?.postedStartTime && (
+          <div>{stringToReadableGMT(record?.postedStartTime)}</div>
+        )
+      );
+    },
+  },
+  {
     title: "Action",
     key: "action",
     render: (record: any) => (

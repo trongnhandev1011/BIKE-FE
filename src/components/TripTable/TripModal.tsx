@@ -1,17 +1,24 @@
+import {
+  DetailDataModalContainer,
+  DetailUserModalContainer,
+} from "@containers/DetailDataModal";
 import { stringToGMT } from "@utils/datetime";
 import { Form, Input, Button } from "antd";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Trip } from "src/types/trip";
-import {
-  tripModalFormItemsRight,
-  tripModalFormItemsLeft,
-} from "./formMapItems";
+import UserModal from "@components/UserTable/UserModal";
 
 const TripModal = ({ currentItem }: { currentItem?: Trip | null }) => {
   const [form] = Form.useForm();
+  const [userId, setUserId] = useState<number | string>(0);
+  const userIdRef = useRef<{
+    passengerId: string;
+    grabberId: string;
+  }>({ passengerId: "", grabberId: "" });
 
   if (currentItem) {
-    const { startTime, endTime, ...rest } = currentItem;
+    const { startTime, endTime, passengerId, grabberId, ...rest } = currentItem;
+    userIdRef.current = { passengerId, grabberId };
 
     form.setFieldsValue({
       startTime: stringToGMT(startTime),
@@ -41,29 +48,48 @@ const TripModal = ({ currentItem }: { currentItem?: Trip | null }) => {
                 <Input disabled style={{ width: "11.875rem" }} />
               </Form.Item>
             </div>
-            {tripModalFormItemsLeft.map((formItem) => (
-              <Form.Item
-                name={formItem.name}
-                label={formItem.label}
-                key={formItem.name}
-              >
-                <Input style={{ width: "25rem" }} />
-              </Form.Item>
-            ))}
+            <Form.Item name={"startTime"} label={"Start Time"}>
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <Form.Item name={"startStationName"} label={"Start Station Name"}>
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <Form.Item name={"passengerName"} label={"Passenger Name"}>
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <a onClick={() => setUserId(userIdRef.current.passengerId)}>
+              See more
+            </a>
           </div>
           <div>
-            {tripModalFormItemsRight.map((formItem) => (
-              <Form.Item
-                name={formItem.name}
-                label={formItem.label}
-                key={formItem.name}
-              >
-                <Input style={{ width: "25rem" }} />
-              </Form.Item>
-            ))}
+            <Form.Item name={"feedbackPoint"} label={"Feedback Point"}>
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <Form.Item name={"endTime"} label={"End Time"}>
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <Form.Item name={"endStationName"} label={"End Station Name"}>
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <Form.Item name={"grabberName"} label={"Grabber Name"}>
+              <Input style={{ width: "25rem" }} />
+            </Form.Item>
+            <a onClick={() => setUserId(userIdRef.current.grabberId)}>
+              See more
+            </a>
           </div>
         </div>
       </Form>
+      <DetailDataModalContainer
+        currentId={userId}
+        itemList={[
+          { id: userIdRef.current.grabberId },
+          { id: userIdRef.current.passengerId },
+        ]}
+        setCurrentId={setUserId}
+      >
+        <DetailUserModalContainer disableAdmin={true} />
+      </DetailDataModalContainer>
     </div>
   );
 };

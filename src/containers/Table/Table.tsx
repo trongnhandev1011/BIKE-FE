@@ -28,7 +28,7 @@ const TableContainer = ({
   setSearchParams?: Dispatch<SetStateAction<object>>;
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [currentId, setCurrentId] = useState<number>(0);
+  const [currentId, setCurrentId] = useState<number | string>(0);
 
   const {
     data: response,

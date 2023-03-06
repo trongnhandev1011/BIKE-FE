@@ -15,25 +15,25 @@ export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
 
   return (
-    <Provider store={store}>
-      <AuthProvider>
-        <NotificationProvider>
-          <SWRConfig
-            value={{
-              fetcher: fetcher,
-              onError: (err) => {
-                console.error(err);
-              },
-            }}
-          >
-            <WrapperLayout>
-              <ErrorBoundary>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <AuthProvider>
+          <NotificationProvider>
+            <SWRConfig
+              value={{
+                fetcher: fetcher,
+                onError: (err) => {
+                  console.error(err);
+                },
+              }}
+            >
+              <WrapperLayout>
                 <Component {...pageProps} />
-              </ErrorBoundary>
-            </WrapperLayout>
-          </SWRConfig>
-        </NotificationProvider>
-      </AuthProvider>
-    </Provider>
+              </WrapperLayout>
+            </SWRConfig>
+          </NotificationProvider>
+        </AuthProvider>
+      </Provider>
+    </ErrorBoundary>
   );
 }

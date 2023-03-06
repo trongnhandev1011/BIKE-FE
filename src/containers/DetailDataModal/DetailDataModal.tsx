@@ -9,9 +9,9 @@ const DetailDataModal = ({
   children,
   refreshTable,
 }: {
-  currentId: number;
+  currentId: number | string;
   itemList: any;
-  setCurrentId: Dispatch<SetStateAction<number>>;
+  setCurrentId: Dispatch<SetStateAction<number | string>>;
   children?: any;
   refreshTable?: any;
 }) => {
