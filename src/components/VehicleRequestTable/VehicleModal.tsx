@@ -1,8 +1,12 @@
 import { Form, Input, Avatar, Space, Button, Alert } from "antd";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Vehicle } from "src/types/vehicle";
 import { updateVehicleRequestStatusAPI } from "@services/backend/VehicleController";
 import { pathToImgURL } from "@utils/image";
+import {
+  DetailDataModalContainer,
+  DetailUserModalContainer,
+} from "@containers/DetailDataModal";
 
 interface IVehicleModalProps {
   currentItem?: Vehicle | null;
@@ -17,8 +21,11 @@ const VehicleModal = ({
 }: IVehicleModalProps) => {
   const [apiError, setApiError] = useState<any>(false);
   const [form] = Form.useForm();
+  const [ownerId, setOwnerId] = useState<number | string>(0);
+  const ownerIdRef = useRef<string>("");
 
   form.setFieldsValue({ ...currentItem });
+  ownerIdRef.current = currentItem?.owner?.id || "";
 
   const handleVehicleRequest = async (approval: boolean) => {
     try {
@@ -45,11 +52,21 @@ const VehicleModal = ({
         form={form}
       >
         <div className="flex gap-5 items-center">
-          <Avatar
-            shape="square"
-            size={256}
-            src={currentItem?.image && pathToImgURL(currentItem?.image)}
-          />
+          <div className="flex flex-col">
+            <Avatar
+              shape="square"
+              size={256}
+              src={currentItem?.image && pathToImgURL(currentItem?.image)}
+            />
+            <Button
+              disabled={false}
+              onClick={() => setOwnerId(ownerIdRef.current)}
+              className="mx-auto mt-3"
+              type="primary"
+            >
+              Owner Detail
+            </Button>
+          </div>
           <div>
             <Form.Item name="id" label="ID">
               <Input disabled style={{ width: "25rem" }} />
@@ -118,6 +135,13 @@ const VehicleModal = ({
           />
         </Space>
       ) : null}
+      <DetailDataModalContainer
+        currentId={ownerId}
+        itemList={[{ id: ownerIdRef.current }]}
+        setCurrentId={setOwnerId}
+      >
+        <DetailUserModalContainer disableAdmin={true} />
+      </DetailDataModalContainer>
     </div>
   );
 };

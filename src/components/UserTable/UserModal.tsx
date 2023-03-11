@@ -7,13 +7,13 @@ import { pathToImgURL } from "@utils/image";
 
 interface IUserModalProps {
   currentItem?: User | null;
-  closeModalHandle?: Dispatch<void>;
+  mutateModal?: Dispatch<void>;
   disableAdmin?: boolean;
 }
 
 const UserModal = ({
   currentItem,
-  closeModalHandle,
+  mutateModal,
   disableAdmin = false,
 }: IUserModalProps) => {
   const isActive: boolean = currentItem?.status == "ACTIVE";
@@ -27,7 +27,7 @@ const UserModal = ({
       const newStatus = isActive ? "INACTIVE" : "ACTIVE";
 
       const result = await updateAccountStatusAPI(currentItem?.id, newStatus);
-      if (closeModalHandle) closeModalHandle();
+      if (mutateModal) mutateModal();
     } catch (e) {
       console.log(e);
       setApiError(e);
@@ -61,7 +61,7 @@ const UserModal = ({
 
               {currentItem?.card && (
                 <div className=" w-full flex justify-center flex-col">
-                  <div className="mb-3 ml-3">Student card</div>
+                  <div className="mx-auto mb-3">Student card</div>
                   <Avatar
                     shape="square"
                     src={pathToImgURL(currentItem?.card)}

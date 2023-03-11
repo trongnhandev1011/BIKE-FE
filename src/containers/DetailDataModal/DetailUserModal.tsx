@@ -22,7 +22,7 @@ const DetailUserModalContainer = ({
     <div className="detail-user-modal-container">
       <UserModal
         currentItem={response?.data}
-        closeModalHandle={() => {
+        mutateModal={() => {
           mutate();
           refreshTable();
         }}
