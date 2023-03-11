@@ -15,6 +15,11 @@ const vehicleRequestColumns: ColumnsType<VehicleRequestTableHeaderType> = [
     align: "right",
   },
   {
+    title: "Owner name",
+    dataIndex: "ownerName",
+    key: "ownerName",
+  },
+  {
     title: "Brand Name",
     dataIndex: "brand",
     key: "brand",
