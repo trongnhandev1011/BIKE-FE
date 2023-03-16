@@ -6,7 +6,12 @@ import {
   CarOutlined,
 } from "@ant-design/icons";
 import { DashboardLayout } from "@layouts/DashboardLayout";
-import { StationScreen, TripScreen, UserScreen, VehicleRequestScreen } from "@containers/Screen";
+import {
+  StationScreen,
+  TripScreen,
+  UserScreen,
+  VehicleRequestScreen,
+} from "@containers/Screen";
 import { DashboardContainer } from "@containers/Dashboard";
 
 const navElements = [
@@ -53,7 +58,7 @@ const navContents: Record<string, JSX.Element> = {
   STATION_MANAGEMENT: <StationScreen />,
   TRIP_MANAGEMENT: <TripScreen />,
   USER_MANAGEMENT: <UserScreen />,
-  VEHICLE_REQUEST_MANAGEMENT: <VehicleRequestScreen /> , 
+  VEHICLE_REQUEST_MANAGEMENT: <VehicleRequestScreen />,
 };
 
 export const SideNavContext = React.createContext({

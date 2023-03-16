@@ -62,3 +62,14 @@ a {
   overflow: visible !important;
   max-width: none;
 }
+
+.ant-dropdown-menu {
+  max-height: 16rem;
+  overflow: auto;
+}
+
+.ant-dropdown-menu-item.ant-dropdown-menu-item-only-child
+  + .ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {
+  border-top: solid 2px;
+  border-color: #afafaf;
+}

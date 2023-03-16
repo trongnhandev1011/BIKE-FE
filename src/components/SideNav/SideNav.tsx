@@ -51,6 +51,10 @@ export default function SideNav({
           defaultSelectedKeys={navElements[0].key}
           style={{ height: "100%" }}
           items={navElements}
+          selectedKeys={
+            navElements.filter((navElement: any) => navElement.isSelected)[0]
+              ?.key
+          }
         />
         <div className="flex justify-center items-center flex-col mb-2">
           <div className="rectangle-divider" style={{ marginTop: "20%" }}></div>

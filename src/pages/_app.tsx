@@ -25,6 +25,7 @@ export default function MyApp(props: AppProps) {
                 onError: (err) => {
                   console.error(err);
                 },
+                refreshInterval: 10000,
               }}
             >
               <WrapperLayout>

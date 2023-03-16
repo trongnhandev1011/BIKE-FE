@@ -19,6 +19,7 @@ import useSWRMutation from "swr";
 import { registerables, Chart } from "chart.js";
 import { Response } from "src/types/Response.type";
 import axiosClient from "@services/backend/axiosClient";
+import { fetcher } from "@utils/common";
 
 Chart.register(...registerables);
 
@@ -31,15 +32,19 @@ const Dashboard = () => {
     dayjs(getRelativeDate({ monthDiff: 9 })),
   ]);
 
-  const { data: response, mutate } = useSWRMutation<Response<any>>({
-    url: "http://52.74.214.224:8080/api/v1/statistics",
-    args: dateRangeRef.current
-      ? {
-          startFrom: dateToISOFormatString(dateRangeRef.current[0]!.toDate()),
-          startTo: dateToISOFormatString(dateRangeRef.current[1]!.toDate()),
-        }
-      : {},
-  });
+  const { data: response, mutate } = useSWRMutation<Response<any>>(
+    {
+      url: "http://52.74.214.224:8080/api/v1/statistics",
+      args: dateRangeRef.current
+        ? {
+            startFrom: dateToISOFormatString(dateRangeRef.current[0]!.toDate()),
+            startTo: dateToISOFormatString(dateRangeRef.current[1]!.toDate()),
+          }
+        : {},
+    },
+    fetcher,
+    { refreshInterval: 5000 }
+  );
 
   return (
     <div

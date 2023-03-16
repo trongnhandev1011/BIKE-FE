@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import type { ColumnType } from "antd/es/table";
 import { VehicleRequestTableColumn } from "@containers/TableColumn";
 import { TableContainer } from "@containers/Table";
@@ -10,6 +10,8 @@ import { SearchOutlined } from "@ant-design/icons";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 import { DetailVehicleModalContainer } from "@containers/DetailDataModal";
 import FilterDisplay from "./FilterDisplay";
+import { useRouter } from "next/router";
+import { useSWRConfig } from "swr";
 
 interface ISearchParams {
   brand?: string;
@@ -22,6 +24,22 @@ const VehicleRequestScreen = () => {
   const [searchParams, setSearchParams] = useState<object>({});
   const [forceRerender, setForceRerender] = useState<number>(0);
   const searchInput = useRef<InputRef>(null);
+  const { mutate } = useSWRConfig();
+
+  const router = useRouter();
+
+  router.events.on(
+    "routeChangeComplete",
+    () =>
+      router.query.tab === "VEHICLE_REQUEST_MANAGEMENT" &&
+      mutate({
+        url: `/${router.query.tab}`,
+        args: {
+          pageNumber: "1",
+          pageSize: "6",
+        },
+      })
+  );
 
   const handleSearch = (
     selectedKeys: string[],
