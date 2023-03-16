@@ -12,10 +12,11 @@ export default function SideNav({ navElements }: { navElements: any }) {
 
   const router = useRouter();
 
-  router.events.on(
-    "routeChangeComplete",
-    () => router.query.tab && setCurrentTabId(router.query.tab as string)
-  );
+  router.events &&
+    router.events.on(
+      "routeChangeComplete",
+      () => router.query.tab && setCurrentTabId(router.query.tab as string)
+    );
 
   const handleClick: MenuProps["onClick"] = (e) => {
     setCurrentTabId(e.key);
