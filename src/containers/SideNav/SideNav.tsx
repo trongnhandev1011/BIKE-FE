@@ -1,19 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { SideNavComponent } from "@components/SideNav";
 import { SideNavContext } from "@pages/dashboard";
 import { MenuProps } from "antd";
 import useAuth from "@hooks/useAuth";
 import { useRouter } from "next/router";
+import { useSWRConfig } from "swr";
 
 export default function SideNav({ navElements }: { navElements: any }) {
-  const { setCurrentTabId } = useContext(SideNavContext);
+  const { currentTabId, setCurrentTabId } = useContext(SideNavContext);
+  const { mutate } = useSWRConfig();
+
+  const router = useRouter();
+
+  router.events.on(
+    "routeChangeComplete",
+    () => router.query.tab && setCurrentTabId(router.query.tab as string)
+  );
 
   const handleClick: MenuProps["onClick"] = (e) => {
     setCurrentTabId(e.key);
   };
-
   const { logout } = useAuth();
-  const router = useRouter();
 
   const logoutHandler = () => {
     logout();
@@ -22,7 +29,20 @@ export default function SideNav({ navElements }: { navElements: any }) {
 
   return (
     <SideNavComponent
-      navElements={navElements}
+      navElements={navElements?.map((navElement: any) =>
+        navElement?.children
+          ? {
+              ...navElement,
+              children: navElement.children.map((child: any) => ({
+                ...child,
+                isSelected: child.key === currentTabId,
+              })),
+            }
+          : {
+              ...navElement,
+              isSelected: navElement.key === currentTabId,
+            }
+      )}
       onClick={handleClick}
       logoutHandler={logoutHandler}
     />
