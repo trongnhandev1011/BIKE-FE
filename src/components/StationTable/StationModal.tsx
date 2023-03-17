@@ -210,9 +210,10 @@ const StationModal = ({
             ) => renderFooter(setPageNumber, info?.direction) as any}
           />
         </div>
-
-        <div className="flex justify-center mt-2 gap-3">
-          {!isEdit ? (
+      </Form>
+      <div className="flex justify-center mt-2 gap-3">
+        {currentItem?.status === "ACTIVE" ? (
+          !isEdit ? (
             <Button
               onClick={() => {
                 if (setIsEdit) setIsEdit(true);
@@ -223,22 +224,22 @@ const StationModal = ({
             </Button>
           ) : (
             <div className="flex justify-center">
-              <Button htmlType="submit">Save</Button>
+              <Button onClick={() => form.submit()}>Save</Button>
             </div>
-          )}
+          )
+        ) : null}
 
-          <Button
-            onClick={() =>
-              currentItem &&
-              changeStationStatus(currentItem, refreshModal, refreshTable)
-            }
-            type="primary"
-            danger={currentItem?.status === "ACTIVE"}
-          >
-            {currentItem?.status === "ACTIVE" ? "Deactivate" : "Activate"}
-          </Button>
-        </div>
-      </Form>
+        <Button
+          onClick={() =>
+            currentItem &&
+            changeStationStatus(currentItem, refreshModal, refreshTable)
+          }
+          type="primary"
+          danger={currentItem?.status === "ACTIVE"}
+        >
+          {currentItem?.status === "ACTIVE" ? "Deactivate" : "Activate"}
+        </Button>
+      </div>
     </div>
   );
 };
