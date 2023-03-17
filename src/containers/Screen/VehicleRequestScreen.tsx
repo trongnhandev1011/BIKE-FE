@@ -28,18 +28,19 @@ const VehicleRequestScreen = () => {
 
   const router = useRouter();
 
-  router.events.on(
-    "routeChangeComplete",
-    () =>
-      router.query.tab === "VEHICLE_REQUEST_MANAGEMENT" &&
-      mutate({
-        url: `/${router.query.tab}`,
-        args: {
-          pageNumber: "1",
-          pageSize: "6",
-        },
-      })
-  );
+  router.events &&
+    router.events.on(
+      "routeChangeComplete",
+      () =>
+        router.query.tab === "VEHICLE_REQUEST_MANAGEMENT" &&
+        mutate({
+          url: `/${router.query.tab}`,
+          args: {
+            pageNumber: "1",
+            pageSize: "6",
+          },
+        })
+    );
 
   const handleSearch = (
     selectedKeys: string[],
