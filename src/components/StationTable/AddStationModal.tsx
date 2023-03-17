@@ -82,14 +82,14 @@ const AddStationModal = ({
                 label="Longitude"
                 rules={StationFormValidation["longitude"]}
               >
-                <Input disabled style={{ width: "11.875rem" }} />
+                <Input style={{ width: "11.875rem" }} />
               </Form.Item>
               <Form.Item
                 name="latitude"
                 label="Latitude"
                 rules={StationFormValidation["latitude"]}
               >
-                <Input disabled style={{ width: "11.875rem" }} />
+                <Input style={{ width: "11.875rem" }} />
               </Form.Item>
             </div>
           </div>
