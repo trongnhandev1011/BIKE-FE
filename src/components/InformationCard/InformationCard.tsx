@@ -20,9 +20,6 @@ const InformationCard = ({
           <div style={{ fontWeight: "bold", fontSize: 28 }}>
             {number} {type}s
           </div>
-          <div className="ml-2" style={{ color: "green" }}>
-            +30%
-          </div>
         </div>
       </div>
       <div
