@@ -20,6 +20,11 @@ const FilterDisplay = ({
   searchParams,
   clearText,
 }: IFilterDisplayProps) => {
+  if (searchParams?.partialName) {
+    searchParams["Name"] = searchParams.partialName;
+    delete searchParams.partialName;
+  }
+
   return (
     <div className="filter-display flex gap-3">
       <Button

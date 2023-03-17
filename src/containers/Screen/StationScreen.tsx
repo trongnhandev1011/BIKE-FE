@@ -15,6 +15,25 @@ const StationScreen = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [forceRerender, setForceRerender] = useState<number>(0);
 
+  const filterParamsDisplay = JSON.parse(JSON.stringify(searchParams));
+  Object.entries(filterParamsDisplay).forEach(([key, value]) => {
+    const newKey = StationTableColumn.filter(
+      (column: any) => column.key === key
+    )[0]?.title;
+
+    if (newKey) {
+      delete Object.assign(filterParamsDisplay, {
+        [newKey as any]: filterParamsDisplay[key],
+      })[key];
+    }
+
+    if (key === "sortBy") {
+      filterParamsDisplay[key] = StationTableColumn.filter(
+        (column: any) => column.key === value || column?.sortKey === value
+      )[0]?.title;
+    }
+  });
+
   return (
     <div className="station-page" style={{ height: "calc(100vh - 64px)" }}>
       <Typography.Title level={2}>Station Management</Typography.Title>
@@ -34,7 +53,7 @@ const StationScreen = () => {
           <FilterDisplay
             setForceRerender={setForceRerender}
             setSearchParams={setSearchParams}
-            searchParams={searchParams}
+            searchParams={filterParamsDisplay}
             clearText={() => setSearchText("")}
           />
         </div>

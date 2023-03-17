@@ -47,6 +47,7 @@ const AddStationModalContainer = ({
               : []
           }
           setPageNumber={setSize}
+          closeModal={closeModalHandle}
         />
       </Modal>
     </div>

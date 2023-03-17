@@ -8,11 +8,12 @@ import { createStationAPI } from "@services/backend/StationController";
 import type { StationFormFields } from "./formMapItems";
 import StationFormValidation from "src/form/validation/stationFormValidation";
 
-const onFinish = async (values: any) => {
+const onFinish = async (values: any, closeModal: any) => {
   try {
     const result = await createStationAPI({
       ...values,
     });
+    if (result?.data?.code === 0) closeModal && closeModal();
   } catch (e) {
     console.error(e);
   }
@@ -38,9 +39,11 @@ const renderFooter = (
 const AddStationModal = ({
   stations,
   setPageNumber,
+  closeModal,
 }: {
   stations: any[];
   setPageNumber: Dispatch<SetStateAction<number>>;
+  closeModal: any;
 }) => {
   const [targetKeys, setTargetKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -54,7 +57,7 @@ const AddStationModal = ({
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 900 }}
         onFinish={(values) =>
-          onFinish({ ...values, nextStationsIds: targetKeys })
+          onFinish({ ...values, nextStationsIds: targetKeys }, closeModal)
         }
       >
         <div className="flex">
