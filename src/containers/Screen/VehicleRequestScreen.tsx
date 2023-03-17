@@ -42,6 +42,25 @@ const VehicleRequestScreen = () => {
         })
     );
 
+  const filterParamsDisplay = JSON.parse(JSON.stringify(searchParams));
+  Object.entries(filterParamsDisplay).forEach(([key, value]) => {
+    const newKey = VehicleRequestTableColumn.filter(
+      (column: any) => column.key === key
+    )[0]?.title;
+
+    if (newKey) {
+      delete Object.assign(filterParamsDisplay, {
+        [newKey as any]: filterParamsDisplay[key],
+      })[key];
+    }
+
+    if (key === "sortBy") {
+      filterParamsDisplay[key] = VehicleRequestTableColumn.filter(
+        (column: any) => column.key === value
+      )[0]?.title;
+    }
+  });
+
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
@@ -114,7 +133,7 @@ const VehicleRequestScreen = () => {
       <FilterDisplay
         setForceRerender={setForceRerender}
         setSearchParams={setSearchParams}
-        searchParams={searchParams}
+        searchParams={filterParamsDisplay}
       />
       <TableContainer
         forceRerender={forceRerender}

@@ -30,6 +30,25 @@ const UserScreen = () => {
   const [forceRerender, setForceRerender] = useState<number>(0);
   const searchInput = useRef<InputRef>(null);
 
+  const filterParamsDisplay = JSON.parse(JSON.stringify(searchParams));
+  Object.entries(filterParamsDisplay).forEach(([key, value]) => {
+    const newKey = UserTableColumn.filter(
+      (column: any) => column.key === key
+    )[0]?.title;
+
+    if (newKey) {
+      delete Object.assign(filterParamsDisplay, {
+        [newKey as any]: filterParamsDisplay[key],
+      })[key];
+    }
+
+    if (key === "sortBy") {
+      filterParamsDisplay[key] = UserTableColumn.filter(
+        (column: any) => column.key === value
+      )[0]?.title;
+    }
+  });
+
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
@@ -102,7 +121,7 @@ const UserScreen = () => {
       <FilterDisplay
         setForceRerender={setForceRerender}
         setSearchParams={setSearchParams}
-        searchParams={searchParams}
+        searchParams={filterParamsDisplay}
       />
       <TableContainer
         forceRerender={forceRerender}

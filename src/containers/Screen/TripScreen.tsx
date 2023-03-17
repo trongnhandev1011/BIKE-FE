@@ -27,6 +27,25 @@ const TripScreen = () => {
   const searchInput = useRef<InputRef>(null);
   const [forceRerender, setForceRerender] = useState<number>(0);
 
+  const filterParamsDisplay = JSON.parse(JSON.stringify(searchParams));
+  Object.entries(filterParamsDisplay).forEach(([key, value]) => {
+    const newKey = TripTableColumn.filter(
+      (column: any) => column.key === key
+    )[0]?.title;
+
+    if (newKey) {
+      delete Object.assign(filterParamsDisplay, {
+        [newKey]: filterParamsDisplay[key],
+      })[key];
+    }
+
+    if (key === "sortBy") {
+      filterParamsDisplay[key] = TripTableColumn.filter(
+        (column: any) => column.key === value
+      )[0]?.title;
+    }
+  });
+
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
@@ -96,7 +115,7 @@ const TripScreen = () => {
       <FilterDisplay
         setForceRerender={setForceRerender}
         setSearchParams={setSearchParams}
-        searchParams={searchParams}
+        searchParams={filterParamsDisplay}
       />
       <TableContainer
         forceRerender={forceRerender}

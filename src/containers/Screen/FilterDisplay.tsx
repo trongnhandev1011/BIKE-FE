@@ -56,7 +56,7 @@ const FilterDisplay = ({
               className="rounded-btn-antd"
               icon={<FilterOutlined />}
             >
-              {value}
+              {`${key}: ${value}`}
             </Button>
           );
         }
