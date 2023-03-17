@@ -41,7 +41,7 @@ const TripScreen = () => {
 
     if (key === "sortBy") {
       filterParamsDisplay[key] = TripTableColumn.filter(
-        (column: any) => column.key === value
+        (column: any) => column.key === value || column?.sortKey === value
       )[0]?.title;
     }
   });
